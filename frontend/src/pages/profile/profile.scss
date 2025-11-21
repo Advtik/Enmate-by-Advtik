@@ -1,0 +1,181 @@
+@import "../../style.scss";
+
+.profile {
+  @include themify($themes) {
+    flex: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background: themed("bg");
+    color: themed("textColor");
+    padding-top: 30px;
+    // overflow-x: hidden;       // prevents right cutoff on phones
+
+    .container {
+      width: 100%;
+      max-width: 650px;        // Increased so posts align cleaner
+    //   padding: 0 20px;         // Horizontal padding for posts
+      display: flex;
+      flex-direction: column;
+      gap: 35px;
+
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+        'Lucida Sans', Arial, sans-serif;
+
+      .top {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        // width: 100%;
+
+        .left img {
+          width: 150px;
+          height: 150px;
+          margin-top: 8px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        .center {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        //   flex-wrap: wrap;
+
+          .username-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .username {
+              font-size: 28px;
+              font-weight: 600;
+            }
+
+            .settings {
+              font-size: 26px;
+              cursor: pointer;
+            }
+          }
+
+          .name {
+            font-size: 16px;
+            color: themed("textColorSoft");
+          }
+
+          .stats {
+            display: flex;
+            gap: 25px;
+            font-size: 15px;
+            // flex-wrap: wrap;
+          }
+
+          .bio {
+            margin-top: 5px;
+            font-size: 15px;
+            color: themed("textColor2");
+          }
+
+          a {
+            font-size: 15px;
+            color: #1d9bf0;
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        width: 100%;
+
+        button {
+          padding: 14px 25px;
+          width: 45%;
+          background: themed("bgSoft");
+          border: 1px solid themed("border");
+          border-radius: 12px;
+          color: themed("textColor");
+          font-weight: 600;
+          font-size: 16px;
+          cursor: pointer;
+          transition: 0.2s;
+
+          &:hover {
+            background: lighten(themed("bgSoft"), 4%);
+          }
+        }
+      }
+    }
+
+  }
+}
+
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 850px) {
+  .profile {
+    @include themify($themes) {
+    //   padding-top: 20px;
+
+      .container {
+        // max-width: 100%;
+        margin: 10px;         // More padding to prevent cutoff
+
+        .top {
+          flex-direction: column;
+          text-align: center;
+
+          .center {
+            align-items: center;
+          }
+        }
+
+        .buttons {
+          flex-direction: column;
+
+          button {
+            width: 95%;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/* Extra tight mobile phones */
+@media (max-width: 480px) {
+  .profile {
+    @include themify($themes) {
+      .container {
+        padding: 0 10px;
+        gap: 28px;
+
+        .top {
+          gap: 25px;
+
+          .left img {
+            width: 125px;
+            height: 125px;
+          }
+
+          .center .username-row .username {
+            font-size: 23px;
+          }
+
+          .center .stats {
+            gap: 15px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}

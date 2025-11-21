@@ -1,0 +1,129 @@
+@import "../../style.scss";
+
+.leftbar {
+  // ✅ Apply themify inside the selector (so '&' works)
+  @include themify($themes) {
+    top: 71px;
+    width: 220px;
+    position: sticky;
+    height: calc(100vh - 71.3px);
+    overflow: scroll;
+    background: themed("bg");
+    color: themed("textColor");
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 85vh;
+      padding: 20px 10px;
+      gap: 50px;
+    }
+
+    .menu,
+    .more {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 10px;
+        border-radius: 8px;
+        color: themed("textColor");
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-size: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: themed("upbg")
+        }
+
+        span {
+          opacity: 0;
+          visibility: hidden;
+          white-space: nowrap;
+          transform: translateX(-10px);
+          transition: all 0.3s ease;
+          color: themed("secondaryText");
+        }
+      }
+    }
+
+    &:hover {
+      .item span {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+        width: 100px;
+      }
+    }
+
+    // ✅ Responsive rules INSIDE themify so both themes react correctly
+    @media (max-width: 1023px) {
+      top: 0;
+      width: auto;
+      position: sticky;
+      height: 103.5vh;
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 85vh;
+        padding: 20px 10px;
+      }
+
+      .menu,
+      .more {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .item {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          padding: 10px;
+          border-radius: 8px;
+          color: themed("textColor");
+          font-family: "Poppins", sans-serif;
+          font-size: 15px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: themed("upbg"); 
+          }
+
+          span {
+            opacity: 0;
+            visibility: hidden;
+            white-space: nowrap;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+            color: themed("secondaryText");
+            display: none;
+          }
+        }
+      }
+
+      &:hover {
+        .item span {
+          opacity: 1;
+          visibility: visible;
+          transform: translateX(0);
+          width: 90px;
+          display: none;
+        }
+      }
+    }
+  }
+}

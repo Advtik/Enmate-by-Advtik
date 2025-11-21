@@ -1,0 +1,289 @@
+/* ===========================
+   🌌 BASE (DESKTOP DEFAULT)
+   =========================== */
+.login {
+  height: 100vh;
+  width: 100vw;
+  background-image: 
+    linear-gradient(rgb(99, 74, 123), rgb(51, 18, 89)),
+    url("https://images.pexels.com/photos/2387793/pexels-photo-2387793.jpeg");
+  background-blend-mode: overlay;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  .card {
+    display: flex;
+    width: 60%;
+    min-height: 520px;
+    background: rgba(25, 25, 35, 0.85);
+    border-radius: 18px;
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(190, 100, 255, 0.2);
+    overflow: hidden;
+    transition: transform 0.4s ease;
+
+    &:hover {
+      box-shadow: 0 0 40px rgba(130, 50, 255, 0.4);
+      transform: scale(1.015);
+    }
+
+    /* ---------- LEFT SIDE ---------- */
+    .left {
+      flex: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      font-size: 30px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("https://images.pexels.com/photos/3183183/pexels-photo-3183183.jpeg")
+          center/cover no-repeat;
+        filter: blur(1px);
+        z-index: 0;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          rgba(50, 0, 100, 0.5),
+          rgba(120, 0, 180, 0.5)
+        );
+        z-index: 1;
+      }
+
+      * {
+        position: relative;
+        z-index: 2;
+      }
+
+      p {
+        margin-top: 3px;
+        font-size: 1.1rem;
+        font-weight: 300;
+        opacity: 0.85;
+      }
+    }
+
+    /* ---------- RIGHT SIDE ---------- */
+    .right {
+      flex: 1;
+      background: #0d0d12;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+
+      .logo {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        margin-top: -10px;
+        margin-bottom: 20px;
+
+        img {
+          max-width: 85px;
+          height: auto;
+          border-radius: 10px;
+          object-fit: contain;
+          transition: transform 0.3s ease;
+        }
+
+        h2 {
+          color: rgb(219, 210, 210);
+          font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+      }
+
+      form {
+        width: 100%;
+        max-width: 320px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+
+        h2 {
+          color: #e0b0ff;
+          text-align: center;
+          font-size: 2.1rem;
+          font-family: "Poppins", sans-serif;
+          margin-bottom: 5px;
+          letter-spacing: 0.5px;
+        }
+
+        input {
+          padding: 12px 15px;
+          border: none;
+          border-radius: 8px;
+          background: rgba(255, 255, 255, 0.07);
+          color: #eee;
+          font-size: 1rem;
+          font-family: "Poppins", sans-serif;
+          transition: all 0.2s;
+
+          &:focus {
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 10px rgba(170, 100, 255, 0.4);
+          }
+
+          &:hover {
+            box-shadow: 0 0 10px rgba(170, 100, 255, 0.4);
+          }
+        }
+
+        button {
+          padding: 12px;
+          border: none;
+          border-radius: 10px;
+          background: linear-gradient(90deg, #7a1fff, #b95fff);
+          color: #fff;
+          font-size: 1rem;
+          font-weight: 600;
+          font-family: "Poppins", sans-serif;
+          letter-spacing: 0.5px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: linear-gradient(90deg, #b95fff, #7a1fff);
+            box-shadow: 0 0 20px rgba(185, 95, 255, 0.5);
+          }
+        }
+
+        a {
+          text-align: center;
+          color: #c39aff;
+          font-size: 0.9rem;
+          text-decoration: none;
+          font-family: "Poppins", sans-serif;
+          transition: color 0.2s;
+
+          &:hover {
+            color: #e5caff;
+          }
+        }
+
+        .new-user {
+          text-align: center;
+          font-family: "Poppins", sans-serif;
+          font-size: 0.95rem;
+          color: #bfbfbf;
+          margin-top: 10px;
+          padding: 10px;
+
+          span {
+            color: #cda8ff;
+            font-weight: 500;
+            margin-left: 6px;
+            cursor: pointer;
+            background: linear-gradient(90deg, #7a1fff, #b95fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease;
+
+            &:hover {
+              letter-spacing: 0.5px;
+              text-shadow: 0 0 8px rgba(185, 95, 255, 0.6);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* ===========================
+   📱 MOBILE VIEW (≤768px)
+   =========================== */
+@media (max-width: 1023px) {
+  .login {
+    background: #0d0d12;
+    padding: 0;
+
+    .card {
+      width: 100%;
+      min-height: 100vh;
+      border-radius: 0;
+      background: #0d0d12;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: none;
+      border: none;
+      backdrop-filter: none;
+
+      /* Hide left section completely */
+      .left {
+        display: none;
+      }
+
+      /* Fullscreen right section */
+      .right {
+        flex: 1;
+        width: 100%;
+        height: 100vh;
+        padding: 40px 25px;
+        background: #0d0d12;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .logo {
+          margin-bottom: 25px;
+
+          img {
+            max-width: 90px;
+            height: auto;
+          }
+
+          h2 {
+            font-size: 1.6rem;
+            color: rgb(230, 220, 230);
+          }
+        }
+
+        form {
+          max-width: 90%;
+          width: 100%;
+          gap: 20px;
+
+          h2 {
+            font-size: 1.8rem;
+          }
+
+          input {
+            padding: 14px 16px;
+            font-size: 1rem;
+          }
+
+          button {
+            padding: 14px;
+            font-size: 1.05rem;
+          }
+
+          .new-user {
+            font-size: 0.9rem;
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+  }
+}

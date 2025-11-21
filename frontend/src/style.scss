@@ -1,0 +1,46 @@
+$themes:(
+    light:(
+        textColor:#000,
+        bg:rgb(244, 242, 242),
+        logo:rgb(17, 16, 16),
+        bgSoft:#d0d0d0,
+        textColorSoft:#555,
+        border:rgba(181, 175, 175, 0.738),
+        upbg:rgba(193, 189, 189, 0.934),
+        containerbg:rgb(232, 232, 233),
+        textColor2:rgb(57, 53, 53)
+        ),
+        dark:(
+            textColor:whitesmoke,
+            bg:#101010,
+            logo:white,
+            bgSoft:#333,
+            textColorSoft:lightgray,
+            border:#454242,
+            upbg:rgba(48, 47, 47),
+            containerbg:rgb(25, 22, 26),
+            textColor2:rgb(191, 184, 184)
+    )
+);
+@mixin themify($themes) {
+  @each $theme, $map in $themes {
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), "#{$key}");
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value,
+          )
+        ) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}

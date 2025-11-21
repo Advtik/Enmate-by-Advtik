@@ -1,0 +1,22 @@
+@import "../../style.scss";
+.home{
+    @include themify($themes){
+    display: flex;
+    flex: 6;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background:themed("bg");
+    color: themed("textColor");
+    top: 71px;
+    }
+
+}
+@media(max-width:850px){
+    .home{
+        @include themify($themes){
+            background: themed(bg);
+        }
+
+    }
+}
