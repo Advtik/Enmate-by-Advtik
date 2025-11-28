@@ -2,6 +2,8 @@ import express from "express";
 import {} from "../controllers/likes.js";
 
 const router=express.Router();
-router.get("",)
+router.get("/test", (req,res)=>{
+    console.log("This route working");
+})
 
 export default router;

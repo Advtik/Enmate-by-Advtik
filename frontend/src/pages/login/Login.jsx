@@ -1,13 +1,31 @@
 import React from 'react'
 import "./login.scss"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/authContext';
+import { useState } from 'react';
 
 
 const Login = () => {
+  const [inputs, setInputs]=useState({
+    username:"",
+    password:"",
+  });
+
+  const navigate=useNavigate();
+  const handleChange=(e)=>{
+    setInputs(prev=>({...prev,[e.target.name]:e.target.value}))
+  }
+
   const {login}=React.useContext(AuthContext);
-  const handleLogin=()=>{
-    login();
+  const handleLogin=async(e)=>{
+    e.preventDefault();
+    try{
+      await login(inputs);
+      navigate("/");
+    }
+    catch(err){
+      alert(err.response?.data || "Something went wrong");
+    }
   };
   return (
     <div className='login'>
@@ -22,8 +40,8 @@ const Login = () => {
             <h2>Login to EnMate</h2>
           </div>
           <form>
-            <input type='text' placeholder=' Username or Email'></input>
-            <input type='password' placeholder='Password'></input>
+            <input type='text' placeholder=' Username or Email' name="username" onChange={handleChange}></input>
+            <input type='password' placeholder='Password' name="password" onChange={handleChange}></input>
             <button onClick={handleLogin}>Login</button>
             <Link to="/register">
               <p class="new-user">
