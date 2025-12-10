@@ -8,6 +8,10 @@ import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNone
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import DehazeOutlinedIcon from '@mui/icons-material/DehazeOutlined';
 import SmartButtonOutlinedIcon from '@mui/icons-material/SmartButtonOutlined';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+
+import CreatePost from '../../components/createpost/CreatePost'
+
 import { Link } from 'react-router-dom';
 const Leftbar = () => {
   return (

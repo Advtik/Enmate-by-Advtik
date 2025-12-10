@@ -18,7 +18,7 @@ const Profile = () => {
 
           <div className="center">
             <div className="username-row">
-              <span className="username">_{currentUser.username}_</span>
+              <span className="username">{currentUser.username}</span>
               <span className="settings">⚙</span>
             </div>
 

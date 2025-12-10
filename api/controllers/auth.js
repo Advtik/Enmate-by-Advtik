@@ -6,8 +6,9 @@ dotenv.config();
 //REGISTER
 export const register=(req,res)=>{
     //check if user exists
-    const q= "SELECT * FROM enmateschema.users WHERE username=$1"
-    db.query(q,[req.body.username], (err,data)=>{
+    const q= "SELECT * FROM enmateschema.users WHERE username=$1 OR email=$2"
+    const username=req.body.username.toLowerCase();
+    db.query(q,[username,req.body.email], (err,data)=>{
         if(err){
             return res.status(500).json(err);
         }
@@ -20,7 +21,7 @@ export const register=(req,res)=>{
           const hashedPassword=bcrypt.hashSync(req.body.password,salt);
     
           const q="INSERT INTO enmateschema.users (username,email,password,name) VALUES ($1,$2,$3,$4)";
-          const values=[req.body.username,req.body.email,hashedPassword,req.body.name];
+          const values=[username,req.body.email,hashedPassword,req.body.name];
           db.query(q,values,(err,data)=>{
             if(err){
                 return res.status(500).json(err);
@@ -32,8 +33,9 @@ export const register=(req,res)=>{
     
 }
 export const login=(req,res)=>{
-    const q="SELECT * FROM enmateschema.users WHERE username=$1";
-    db.query(q,[req.body.username],(err,data)=>{
+    const username=req.body.username.toLowerCase();
+    const q="SELECT * FROM enmateschema.users WHERE username=$1 OR email=$1";
+    db.query(q,[username],(err,data)=>{
         if(err){
             return res.status(500).json(err);
         }
