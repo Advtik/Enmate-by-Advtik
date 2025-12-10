@@ -18,7 +18,7 @@ const Rightbar = () => {
       {/* Sidebar */}
       <div className={`rightbar ${open ? "visible" : ""}`}>
         <div className="container">
-          <h3>Best Opportunities</h3>
+          <h3>Latest Opportunities</h3>
 
           <div className="list">
             <div className="item">
@@ -63,7 +63,7 @@ const Rightbar = () => {
             </div>
           </div>
 
-          <button>Create Opportunity</button>
+          {/* <button>Create Opportunity</button> */}
         </div>
       </div>
     </>

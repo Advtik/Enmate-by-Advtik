@@ -133,10 +133,12 @@
     // Responsive behavior
     @media (max-width: 1023px) {
       width: 95%;
-      padding-right: 40px;;
+      padding-right: 32px;
+      padding-left: 10px;
       margin-left: 10px;
       .container {
-        padding: 12px 14px;
+        // padding: 12px 14px;
+        width: 100%;
 
         .userinfo img {
           width: 38px;
@@ -158,9 +160,10 @@
     }
 
     @media (max-width: 600px) {
-      max-width: 95%;
+      max-width: 100%;
       border-radius: 10px;
-
+      // padding-right: 40px;
+      margin-left: 10px;
       .container {
         padding: 10px;
 
