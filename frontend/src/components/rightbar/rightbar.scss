@@ -112,11 +112,11 @@
     }
 
     /* ---------- Responsive Drawer Behavior ---------- */
-    @media (max-width: 850px) {
+    @media (max-width: 1500px) {
       position: fixed;
-      top: 0;
+      top: 40px;
       right: 0;
-      width: 30%;
+      width: 50%;
       height: 100%;
       z-index: 100;
       background: transparent;
@@ -160,7 +160,7 @@
     transform: translateY(-50%) scale(1.05);
   }
 
-  @media (max-width: 850px) {
+  @media (max-width: 1500px) {
     display: flex;
     align-items: center;
     justify-content: center;

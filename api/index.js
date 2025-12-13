@@ -16,7 +16,7 @@ app.use((req,res,next)=>{
 });
 app.use(express.json());
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"http://192.168.29.231:5173",
     credentials:true
 }));
 app.use(cookieparser());
@@ -26,6 +26,7 @@ app.use("/api/users",userRoute);
 app.use("/api/posts",postRoute);
 app.use("/api/comments",commentRoute);
 app.use("/api/likes",likeRoute);
+
 
 app.listen(8800,()=>{
     console.log("Api working");

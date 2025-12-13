@@ -127,12 +127,13 @@
     //   padding-top: 20px;
 
       .container {
-        // max-width: 100%;
+        max-width: 92%;
         margin: 10px;         // More padding to prevent cutoff
 
         .top {
           flex-direction: column;
           text-align: center;
+          padding-left: 0px;
 
           .center {
             align-items: center;

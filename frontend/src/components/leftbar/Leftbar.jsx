@@ -9,21 +9,25 @@ import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlin
 import DehazeOutlinedIcon from '@mui/icons-material/DehazeOutlined';
 import SmartButtonOutlinedIcon from '@mui/icons-material/SmartButtonOutlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { DarkModeContext } from '../../context/darkModeContext';
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 
 import CreatePost from '../../components/createpost/CreatePost'
 
 import { Link } from 'react-router-dom';
 const Leftbar = () => {
+  const {darkMode,toggle} = React.useContext(DarkModeContext); 
   return (
     <div className='leftbar'>
       <div className='container'>
         <div className='menu'>
-          <div className='item'>
-            <HomeOutlinedIcon></HomeOutlinedIcon>
-            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-              <span>Home</span>
-            </Link>
-          </div>
+          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+            <div className='item'>
+              <HomeOutlinedIcon></HomeOutlinedIcon>
+                <span>Home</span>
+            </div>
+          </Link>
           <div className='item'>
             <MessageOutlinedIcon></MessageOutlinedIcon>
             <span>Messages</span>
@@ -46,6 +50,7 @@ const Leftbar = () => {
           </div>
         </div>
         <div className='more'>
+          {/* {darkMode?<WbSunnyOutlinedIcon onClick={toggle} className='icon'></WbSunnyOutlinedIcon>:<DarkModeOutlinedIcon onClick={toggle} className='icon'></DarkModeOutlinedIcon>} */}
           <div className='item'>
             <DehazeOutlinedIcon></DehazeOutlinedIcon>
             <span>More</span>
