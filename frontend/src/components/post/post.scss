@@ -4,7 +4,8 @@
 
 .post {
   @include themify($themes) {
-    width: 100%;
+    width: 700px;
+    // min-width: 700px;
     max-width: 700px;
     background: themed("bg");
     margin: 20px;
@@ -31,6 +32,7 @@
           display: flex;
           align-items: center;
           gap: 14px;
+          margin-bottom: 5px;
 
           img {
             width: 42px;
@@ -80,8 +82,8 @@
         p {
           font-size: 14.5px;
           color: themed("textColor");
-          margin-bottom: 10px;
-          line-height: 1.5;
+          // margin-bottom: 10px;
+          // line-height: 1.5;
           word-wrap: break-word;
           font-family: Arial, Helvetica, sans-serif;
         }
@@ -132,10 +134,12 @@
 
     // Responsive behavior
     @media (max-width: 1023px) {
-      width: 95%;
+      width: 100%;
+      min-width: none;
+      max-width: 400px;
       padding-right: 32px;
       padding-left: 10px;
-      margin-left: 10px;
+      margin-left: 107px;
       .container {
         // padding: 12px 14px;
         width: 100%;
@@ -161,6 +165,7 @@
 
     @media (max-width: 600px) {
       width: auto;
+      min-width: none;
       border-radius: 10px;
       // padding-right: 40px;
       margin-left: 10px;

@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import {db} from "../connect.js";
+import moment from "moment/moment.js";
 
 export const getPosts=(req,res)=>{
     const token=req.cookies.accesstoken;
@@ -16,6 +17,33 @@ export const getPosts=(req,res)=>{
                 return res.status(500).json(err); 
             }
             return res.status(200).json(data);
+        })
+    })
+}
+
+export const addPost=(req,res)=>{
+    const token=req.cookies.accesstoken;
+    if(!token){
+        return res.status(401).json("Not Logged in!");
+    }
+
+    jwt.verify(token,process.env.JWT_SECRET,(err,userInfo)=>{
+        const q= `INSERT INTO enmateschema.posts("desc",img,userid,"createdAt",title,type,content) VALUES ($1,$2,$3,$4,$5,$6,$7)`;
+        const values=[
+            req.body.desc,
+            req.body.img,
+            userInfo.id,
+            moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+            req.body.title,
+            req.body.type,
+            req.body.content
+        ]
+        db.query(q,values,(err,data)=>{
+            if(err){
+                console.log(err);
+                return res.status(500).json(err); 
+            }
+            return res.status(200).json("Post has been created");
         })
     })
 }

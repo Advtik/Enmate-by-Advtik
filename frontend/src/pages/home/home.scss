@@ -16,7 +16,15 @@
     .home{
         @include themify($themes){
             background: themed(bg);
+            display: flex;
+    flex: 6;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background:themed("bg");
+    color: themed("textColor");
+    top: 71px;
         }
-
+        
     }
 }

@@ -29,7 +29,7 @@ const Post = ({post}) => {
                 <MoreHorizOutlinedIcon></MoreHorizOutlinedIcon>
             </div>
             <div className="content">
-                <p>{post.desc}</p>
+                <p>{post.content}</p>
                 <img src={post.img} alt="" />
             </div>
             <div className="info">

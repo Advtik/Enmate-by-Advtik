@@ -1,7 +1,8 @@
 .create{
     margin-top: 15px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    width: 100%;
+    width: 700px;
+    // min-width: 700px;
     max-width: 700px;
     // background: themed("bg");
     // margin: 20px;
@@ -150,9 +151,13 @@ textarea {
         margin-right: 40px;
         margin-left: 40px;
         width: 96%;
+        min-width: none;
     }
 }
 @media(max-width:600px){
+  .create{
+    min-width: none;
+  }
   .modal{
     width:280px;
   }
