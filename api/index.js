@@ -8,6 +8,7 @@ import authRoute from "./routes/auth.js";
 import cors from "cors";
 import cookieparser from "cookie-parser";
 import dotenv from "dotenv";
+import multer from "multer";
 
 //middlewares
 app.use((req,res,next)=>{
@@ -20,6 +21,26 @@ app.use(cors({
     credentials:true
 }));
 app.use(cookieparser());
+
+//file uploading
+
+//file storing on disk storage
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '../frontend/public/upload')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now()+file.originalname)
+  }
+})
+const upload = multer({ storage: storage })
+
+//posting on the upload file route
+app.post("api/upload",upload.single("file"),(req,res)=>{
+    const file=req.file;
+    res.status(200).json("File uploaded successfully");
+});
+//file upload end
 
 app.use("/api/auth",authRoute);
 app.use("/api/users",userRoute);
