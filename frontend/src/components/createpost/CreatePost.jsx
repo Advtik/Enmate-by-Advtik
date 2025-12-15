@@ -12,7 +12,19 @@ const CreatePost=()=>{
     const [title,settitle]=useState("");
     const [type,settype]=useState("");
     const [content,setcontent]=useState("");
-    // const [file,setfile]=useState(NULL);
+    const [file,setfile]=useState(null);
+
+    const upload= async()=>{
+        try{
+            const formdata=new FormData();
+            formdata.append("file",file);
+            const res=await makeRequest.post("/upload",formdata);
+            return res.data;
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
 
     const queryClient=useQueryClient();
     
@@ -30,15 +42,17 @@ const CreatePost=()=>{
                 settype("");
                 setcontent("");
                 setopen(false);
+                setfile(null);
             },
             onError: (err) => {
                 console.error("Post creation failed:", err);
             }
         }
     )
-    const handleClick=e=>{
+    const handleClick=async(e)=>{
         e.preventDefault();
-        mutation.mutate({title,desc,type,content});
+        const imgUrl= await upload();
+        mutation.mutate({title,desc,type,content,img:imgUrl});
         
     }
 
@@ -82,7 +96,12 @@ const CreatePost=()=>{
                                 <textarea placeholder="Whats on your mind" name="content" required onChange={(e)=>setcontent(e.target.value)}></textarea>
                             </div>
                             <div className="actions">
-                                <button type="button">Attach Image</button>
+                                <input type="file" accept="image/*" hidden id="fileinput" onChange={(e)=>{setfile(e.target.files[0])}}>
+                                </input>
+                                <div className="attach">
+                                    <button type="button" onClick={()=>document.getElementById("fileinput").click()}>Attach Image</button>
+                                    {file && <img src={URL.createObjectURL(file)} className="image"></img>}
+                                </div>
                                 <button type="submit" className="submit-btn" >Post</button>
                             </div>
                         </form>

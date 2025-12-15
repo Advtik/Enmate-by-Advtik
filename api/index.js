@@ -17,7 +17,7 @@ app.use((req,res,next)=>{
 });
 app.use(express.json());
 app.use(cors({
-    origin:"http://192.168.29.231:5173",
+    origin:"http://192.168.1.4:5173",
     credentials:true
 }));
 app.use(cookieparser());
@@ -36,9 +36,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 //posting on the upload file route
-app.post("api/upload",upload.single("file"),(req,res)=>{
+app.post("/api/upload",upload.single("file"),(req,res)=>{
     const file=req.file;
-    res.status(200).json("File uploaded successfully");
+    res.status(200).json(file.filename);
 });
 //file upload end
 
