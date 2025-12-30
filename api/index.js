@@ -9,6 +9,7 @@ import cors from "cors";
 import cookieparser from "cookie-parser";
 import dotenv from "dotenv";
 import multer from "multer";
+import {uploadoncloud} from "./utils/cloudinary.js"
 
 //middlewares
 app.use((req,res,next)=>{
@@ -36,12 +37,21 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 //posting on the upload file route
-app.post("/api/upload",upload.single("file"),(req,res)=>{
+app.post("/api/upload",upload.single("file"),async(req,res)=>{
     const file=req.file;
-    res.status(200).json(file.filename);
+
+    if (!file) {
+      return res.status(400).json("No file uploaded");
+    }
+    console.log(file.path);
+    const cloudresponse=await uploadoncloud(file.path);
+
+    if (!cloudresponse) {
+      return res.status(500).json("Cloud upload failed");
+    }
+    res.status(200).json(cloudresponse.secure_url);
 });
 //file upload end
-
 app.use("/api/auth",authRoute);
 app.use("/api/users",userRoute);
 app.use("/api/posts",postRoute);
