@@ -9,6 +9,7 @@ import { Link, redirect } from "react-router-dom";
 import Comments from "../comments/Comments";
 import moment from "moment";
 import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query'
+import makeRequest from "../../axios";
 
 const Post = ({post}) => {
     console.log(post);
@@ -47,7 +48,7 @@ const Post = ({post}) => {
             <div className="info">
                 <div className="item">
                     { <FavoriteOutlinedIcon style={{color:"red"}}></FavoriteOutlinedIcon>}
-                    {data.rows.length} Likes
+                    {(data?.rows.length==0)?"No":data?.rows.length} Likes
                 </div>
                 <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
                     <ModeCommentOutlinedIcon></ModeCommentOutlinedIcon>

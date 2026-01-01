@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const makeRequest=axios.create({
-    baseURL: "http://192.168.1.4:8800/api/",
+    baseURL: "http://10.176.215.70:8800/api/",
     withCredentials:true,
 })  
 
