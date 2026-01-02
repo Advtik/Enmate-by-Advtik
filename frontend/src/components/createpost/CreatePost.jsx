@@ -92,7 +92,7 @@ const CreatePost=()=>{
                             </div>
                             <br></br>
                             <div>
-                                <span>Content</span>
+                                <span>Content</span> 
                                 <textarea placeholder="Whats on your mind" name="content" required onChange={(e)=>setcontent(e.target.value)}></textarea>
                             </div>
                             <div className="actions">
