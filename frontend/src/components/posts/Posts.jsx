@@ -17,7 +17,7 @@ const Posts = () => {
     <div className="posts">
         {error?"Sorry":
         (isLoading?"Loading":data?.rows?.map(post=>(
-            <Post post={post} key={post.postId}></Post>
+            <Post post={post}></Post>
         )))}
     </div>
   )

@@ -28,22 +28,45 @@ export const addPost=(req,res)=>{
     }
 
     jwt.verify(token,process.env.JWT_SECRET,(err,userInfo)=>{
-        const q= `INSERT INTO enmateschema.posts("desc",img,userid,"createdAt",title,type,content) VALUES ($1,$2,$3,$4,$5,$6,$7)`;
-        const values=[
-            req.body.desc,
-            req.body.img,
-            userInfo.id,
-            moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
-            req.body.title,
-            req.body.type,
-            req.body.content
-        ]
-        db.query(q,values,(err,data)=>{
+
+        db.query("BEGIN", (err)=>{
             if(err){
-                console.log(err);
-                return res.status(500).json(err); 
+                done();
+                return res.status(500).json(err);
             }
-            return res.status(200).json("Post has been created");
+            const q= `INSERT INTO enmateschema.posts("desc",img,userid,"createdAt",title,type,content) VALUES ($1,$2,$3,$4,$5,$6,$7)`;
+            const values=[
+                req.body.desc,
+                req.body.img,
+                userInfo.id,
+                moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+                req.body.title,
+                req.body.type,
+                req.body.content
+            ]
+            db.query(q,values,(err,data)=>{
+                if(err){
+                    return db.query("ROLLBACK",()=>{
+                        done();
+                        console.log(err);
+                        return res.status(500).json(err); 
+                    })
+                }
+                const update_postcnt=`UPDATE enmateschema.users SET post_count=post_count+1 WHERE id=$1`;
+                db.query(update_postcnt,[userInfo.id],(err,data)=>{
+                    if(err){
+                        return db.query("ROLLBACK",()=>{
+                            done();
+                            console.log(err);
+                            return res.status(500).json(err); 
+                        })
+                    }
+                    db.query("COMMIT",()=>{
+                        done();
+                        return res.status(200).json("Post count incremented");
+                    })
+                })
+            })
         })
     })
 }

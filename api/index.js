@@ -18,7 +18,7 @@ app.use((req,res,next)=>{
 });
 app.use(express.json());
 app.use(cors({
-    origin:"http://192.168.1.4:5173",
+    origin:"http://192.168.1.5:5173",
     credentials:true
 }));
 app.use(cookieparser());

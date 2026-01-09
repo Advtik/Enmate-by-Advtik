@@ -13,7 +13,7 @@ import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query'
 import makeRequest from "../../axios";
 
 const Post = ({post}) => {
-    console.log(post);
+    console.log("post",post);
     const {currentUser}=useContext(AuthContext);
     const [commentOpen,setCommentOpen]=useState(false);
 
@@ -24,8 +24,15 @@ const Post = ({post}) => {
             return res.data; 
         }
     });
-    console.log(data);
 
+    const { isLoading:CommentisLoading, error:Commenterror, data:Commentdata}=useQuery({
+        queryKey: ['comments',post.postid],
+        queryFn:async()=>{
+            const res=await makeRequest.get("/comments?postId="+post.postid)
+            return res.data; 
+        }
+    });
+    console.log(Commentdata?.rows);
     const queryClient=useQueryClient();
     
     const mutation = useMutation(
@@ -43,6 +50,7 @@ const Post = ({post}) => {
             }
         }
     )
+    console.log(post.userid);
 
     const handleLike=()=>{
         mutation.mutate(data?.includes(currentUser.id));
@@ -55,7 +63,7 @@ const Post = ({post}) => {
                     <img src={post.profilePic} alt=""></img>
                     <div className="details">
                         <Link
-                            to={`/profile/${post.userId}`}
+                            to={`/profile/${post.userid}`}
                             style={{ textDecoration: "none", color: "inherit" }}
                         >
                         <span className="name">{post.name}</span>
@@ -78,7 +86,7 @@ const Post = ({post}) => {
                 </div>
                 <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
                     <ModeCommentOutlinedIcon></ModeCommentOutlinedIcon>
-                    12 Comments
+                    {(Commentdata?.rows?.length===0)?"No":Commentdata?.rows?.length} Comments
                 </div>
                 <div className="item">
                     <ShareOutlinedIcon />
