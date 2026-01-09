@@ -5,6 +5,7 @@ import postRoute from "./routes/posts.js";
 import commentRoute from "./routes/comments.js";
 import likeRoute from "./routes/likes.js";
 import authRoute from "./routes/auth.js";
+import relationshipRoute from "./routes/relationships.js"
 import cors from "cors";
 import cookieparser from "cookie-parser";
 import dotenv from "dotenv";
@@ -57,6 +58,7 @@ app.use("/api/users",userRoute);
 app.use("/api/posts",postRoute);
 app.use("/api/comments",commentRoute);
 app.use("/api/likes",likeRoute);
+app.use("/api/relationships",relationshipRoute);
 
 
 app.listen(8800,()=>{

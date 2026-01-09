@@ -31,7 +31,6 @@ export const addPost=(req,res)=>{
 
         db.query("BEGIN", (err)=>{
             if(err){
-                done();
                 return res.status(500).json(err);
             }
             const q= `INSERT INTO enmateschema.posts("desc",img,userid,"createdAt",title,type,content) VALUES ($1,$2,$3,$4,$5,$6,$7)`;
@@ -47,7 +46,7 @@ export const addPost=(req,res)=>{
             db.query(q,values,(err,data)=>{
                 if(err){
                     return db.query("ROLLBACK",()=>{
-                        done();
+    
                         console.log(err);
                         return res.status(500).json(err); 
                     })
@@ -56,13 +55,13 @@ export const addPost=(req,res)=>{
                 db.query(update_postcnt,[userInfo.id],(err,data)=>{
                     if(err){
                         return db.query("ROLLBACK",()=>{
-                            done();
+        
                             console.log(err);
                             return res.status(500).json(err); 
                         })
                     }
                     db.query("COMMIT",()=>{
-                        done();
+    
                         return res.status(200).json("Post count incremented");
                     })
                 })

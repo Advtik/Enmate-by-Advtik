@@ -38,7 +38,7 @@ const Leftbar = () => {
           </div>
           <div className='item'>
             <GroupOutlinedIcon></GroupOutlinedIcon>
-            <span>Teams</span>
+            <span>Network</span>
           </div>
           <div className='item'>
             <NotificationsNoneOutlinedIcon></NotificationsNoneOutlinedIcon>

@@ -21,7 +21,7 @@ const Register = () => {
     e.preventDefault();
 
     try{
-      await axios.post("http://localhost:8800/api/auth/register", inputs);
+      await axios.post("http://192.168.1.5:8800/api/auth/register", inputs);
       alert("User Created Successfully");
       navigate("/login");
     }

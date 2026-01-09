@@ -10,7 +10,7 @@ const Profile = () => {
   const {currentUser} = useContext(AuthContext);
 
   const userId=useLocation().pathname.split("/")[2];
-  console.log(userId);
+  console.log("userId",userId);
   console.log(currentUser.id);
 
   const { isLoading, error, data}=useQuery({
@@ -20,17 +20,51 @@ const Profile = () => {
           return res.data; 
       }
   });
-  console.log("user",data);
+  // console.log("user",data);
 
+
+  
+  const {isLoading:relationshipLoading,data:relationshipdata}=useQuery({
+    queryKey: ['relationship'],
+    queryFn:async()=>{
+      const res=await makeRequest.get("/relationships?followedUserId="+userId)
+      return res.data; 
+    }
+  });
+
+  const queryClient=useQueryClient();
+  const mutation = useMutation(
+        {
+            mutationFn: (following)=>{
+                if(following) return makeRequest.delete("/relationships?userId="+userId);
+                return makeRequest.post("/relationships?userId="+userId);
+            },
+            onSuccess:()=>{
+                // Invalidate and refetch
+                queryClient.invalidateQueries({ queryKey: ['relationship'] });
+            },
+            onError: (err) => {
+                console.error("follow failed", err);
+            }
+        }
+    )
+
+    const handleFollow=()=>{
+        mutation.mutate(relationshipdata?.includes(currentUser.id));
+    }
   if(isLoading){
     return <div>Loading profile...</div>;
   }
-
+  
   if(error){
     return <div>Failed to load profile</div>;
   }
   
-
+  if(relationshipLoading){
+    return <div>Loading relations</div>
+  }
+  
+  console.log("relation",relationshipdata);
   return (
     <div className="profile">
       <div className="container">
@@ -63,9 +97,9 @@ const Profile = () => {
         </div>
 
         <div className="buttons">
-          <button>{(currentUser.id==userId)?"Update":"Follow"}</button>
+          {(currentUser.id==userId)?<button>Update</button>:<button onClick={handleFollow}>{(relationshipdata.includes(currentUser.id))?"Unfollow":"Follow"}</button>}
           <button>{(currentUser.id==userId)?"Available":"Message"}</button>
-        </div>
+        </div>  
 
       </div>
       <Posts></Posts>
