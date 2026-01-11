@@ -25,6 +25,8 @@ const Post = ({post}) => {
         }
     });
 
+
+
     const { isLoading:CommentisLoading, error:Commenterror, data:Commentdata}=useQuery({
         queryKey: ['comments',post.postid],
         queryFn:async()=>{
@@ -60,7 +62,7 @@ const Post = ({post}) => {
         <div className="container">
             <div className="user">
                 <div className="userinfo">
-                    <img src={post.profilePic} alt=""></img>
+                    <img src={post.profilepic} alt=""></img>
                     <div className="details">
                         <Link
                             to={`/profile/${post.userid}`}

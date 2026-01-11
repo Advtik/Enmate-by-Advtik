@@ -1,13 +1,15 @@
-import React, { useContext } from 'react'
+import React, { useContext,useState } from 'react'
 import "./profile.scss"
 import { AuthContext } from '../../context/authContext'
 import Posts from "../../components/posts/posts"
+import Update from "../../components/update/Update"
 import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query'
 import makeRequest from "../../axios";
 import { useLocation } from 'react-router-dom'
 
 const Profile = () => {
   const {currentUser} = useContext(AuthContext);
+  const[showUpdate,setshowUpdate]=useState(false);
 
   const userId=useLocation().pathname.split("/")[2];
   console.log("userId",userId);
@@ -89,19 +91,20 @@ const Profile = () => {
             </div>
 
             <div className="bio">{data.bio}</div>
-            <a href={data.website} target="_blank" rel="noreferrer">
-              {data.website}
+            <a href={data.site} target="_blank" rel="noreferrer">
+              {data.site}
             </a>
-          </div>
+          </div> 
 
         </div>
 
         <div className="buttons">
-          {(currentUser.id==userId)?<button>Update</button>:<button onClick={handleFollow}>{(relationshipdata.includes(currentUser.id))?"Unfollow":"Follow"}</button>}
+          {(currentUser.id==userId)?<button onClick={()=>{setshowUpdate(true)}}>Update</button>:<button onClick={handleFollow}>{(relationshipdata.includes(currentUser.id))?"Unfollow":"Follow"}</button>}
           <button>{(currentUser.id==userId)?"Available":"Message"}</button>
         </div>  
 
       </div>
+      {showUpdate && <Update onClose={()=>{setshowUpdate(false)}}></Update>}
       <Posts></Posts>
     </div>
   )
