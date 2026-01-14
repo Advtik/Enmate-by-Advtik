@@ -1,0 +1,220 @@
+@import "../../style.scss";
+
+.bar {
+    @include themify($themes) {
+    background:themed("upbg");
+    border-radius: 10px;
+    padding: 10px 12px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    border: 1px solid themed("border");
+    color: themed("textColor");
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+    &:hover {
+        background: themed("upbg");
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        transform: translateY(-2px);
+    }
+
+    .title {
+        display: block;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: themed("textColor");
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        margin-bottom: 4px;
+        }
+
+    p {
+        font-size: 0.85rem;
+        color: themed("textColor2");
+        line-height: 1.4;
+        font-family: "Poppins", sans-serif;
+    }
+}
+}
+
+
+.opportunityModal{
+  @include themify($themes){
+    position:fixed;
+    inset:0;
+    z-index:999;
+    background:rgba(0,0,0,0.55);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+    .modalBox{
+      background:themed("bg");
+      width:92%;
+      max-width:640px;
+      max-height:88vh;
+      border-radius:14px;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+      animation:scaleIn .25s ease;
+    }
+
+    /* ---- HEADER ---- */
+    .modalHeader{
+    //   padding:12px 16px;
+      display:flex;
+      max-height: 50px;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom:1px solid themed("border");
+      background:themed("bgSoft");
+
+      h3{
+        padding: 15px;
+        padding-top: 30px;
+      }
+
+      .closing{
+        background:transparent;
+        border:none;
+        padding-right:20px;
+        padding-bottom: 20px;
+        cursor:pointer;
+        outline: none;
+        box-shadow: none;
+        font-size: large;
+
+        &:focus{
+            outline:none;
+            box-shadow:none;
+            background:transparent;
+
+        }
+
+        &:hover{
+             outline:none;
+            box-shadow:none;
+            background:transparent;
+        }
+
+        &:active{
+            transform:scale(0.95);
+        }
+      }
+    }
+
+    /* ---- BODY ---- */
+    .modalBody{
+      padding:14px;
+      overflow-y:auto;
+      flex:1;
+      background:themed("bg");
+      max-width: 640px;
+    }
+
+    /* ---- OPPORTUNITY CARD ---- */
+    .opportunity{
+      background:themed("bgSoft");
+      border-radius:12px;
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      max-width: 600px;
+
+      /* top user bar */
+      .user{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap: 30px;
+
+        .userinfo{
+          display:flex;
+          align-items:center;
+          gap:10px;
+
+          img{
+            width:42px;
+            height:42px;
+            border-radius:50%;
+            object-fit:cover;
+          }
+
+          .details{
+            display:flex;
+            flex-direction:column;
+
+            .name{
+              font-size:14px;
+              font-weight:600;
+              color:themed("textColor");
+            }
+
+            .date{
+              font-size:12px;
+              color:themed("textColorSoft");
+            }
+          }
+        }
+      }
+
+      /* content */
+      .content{
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+        margin: 20px;
+
+        p{
+          font-size:14px;
+          line-height:1.5;
+          color:themed("textColor");
+          margin:0;
+        }
+
+        img{
+          width:100%;
+          max-height:300px;
+          object-fit:cover;
+          border-radius:10px;
+        }
+      }
+
+      /* actions */
+      .info{
+        display:flex;
+        justify-content:flex-start;
+        padding-top:6px;
+        border-top:1px solid themed("border");
+
+        .share{
+          display:flex;
+          align-items:center;
+          gap:6px;
+          padding:6px 10px;
+          font-size:13px;
+          border-radius:6px;
+          cursor:pointer;
+          color:themed("textColorSoft");
+
+          &:hover{
+            background:themed("bgHover");
+            color:themed("textColor");
+          }
+        }
+      }
+    }
+  }
+}
+
+/* animations */
+@keyframes scaleIn{
+  from{
+    transform:scale(.95);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}

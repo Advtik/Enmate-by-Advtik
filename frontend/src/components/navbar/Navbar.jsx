@@ -36,7 +36,7 @@ const Navbar = ({post}) => {
         <div className="right">
             <NotificationsOutlinedIcon></NotificationsOutlinedIcon>
             <div className='user'>
-                <img src={currentUser.profilePic}></img>
+                <img src={currentUser.profilepic}></img>
                 <Link to={`/profile/${currentUser.id}`}
                     style={{ textDecoration: "none", color: "inherit" }}
                 >

@@ -13,7 +13,7 @@ const Profile = () => {
 
   const userId=useLocation().pathname.split("/")[2];
   console.log("userId",userId);
-  console.log(currentUser.id);
+  console.log(currentUser);
 
   const { isLoading, error, data}=useQuery({
       queryKey: ['user'],
@@ -100,7 +100,7 @@ const Profile = () => {
 
         <div className="buttons">
           {(currentUser.id==userId)?<button onClick={()=>{setshowUpdate(true)}}>Update</button>:<button onClick={handleFollow}>{(relationshipdata.includes(currentUser.id))?"Unfollow":"Follow"}</button>}
-          <button>{(currentUser.id==userId)?"Available":"Message"}</button>
+          <button>{(currentUser.id==userId)?((data.status==="available")?"Available":"Unavailable"):"Message"}</button>
         </div>  
 
       </div>

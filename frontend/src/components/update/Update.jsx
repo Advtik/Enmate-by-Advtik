@@ -64,6 +64,7 @@ const Update=({onClose})=>{
                 setfile(data.profilepic);
                 setsite(data.site);
                 setstatus(data.status);
+                onClose();
             },
             onError: (err) => {
                 console.error("Profile updation failed:", err);
@@ -72,7 +73,10 @@ const Update=({onClose})=>{
     )
     const handleClick=async(e)=>{
         e.preventDefault();
-        const imgUrl= await upload();
+        let imgUrl = data.profilepic;
+        if(file instanceof File){
+            imgUrl= await upload();
+        }
         mutation.mutate({name,email,bio,city,profilepic:imgUrl,site,status});
     }
 
@@ -91,12 +95,12 @@ const Update=({onClose})=>{
 
                     <div className="row">
                     <span>Name</span>
-                    <input placeholder="Your name" maxLength={40} required onChange={(e)=>setname(e.target.value)} />
+                    <input placeholder="Your name" maxLength={40} onChange={(e)=>setname(e.target.value)} />
                     </div>
 
                     <div className="row">
                     <span>Email</span>
-                    <input placeholder="Your email" maxLength={45} required onChange={(e)=>setemail(e.target.value)} />
+                    <input placeholder="Your email" maxLength={45} onChange={(e)=>setemail(e.target.value)} />
                     </div>
 
                     <div className="row">
@@ -116,7 +120,7 @@ const Update=({onClose})=>{
 
                     <div className="row">
                     <span>Status</span>
-                    <select onChange={(e)=>setstatus(e.target.value)} required>
+                    <select onChange={(e)=>setstatus(e.target.value)}>
                         <option value="">Select</option>
                         <option value="available">Available</option>
                         <option value="unavailable">Unavailable</option>
