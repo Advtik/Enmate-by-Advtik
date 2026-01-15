@@ -1,0 +1,122 @@
+@import "../../style.scss";
+
+.availableuser{
+  @include themify($themes){
+    width: 90%;
+    max-width: 550px;
+    border: 1px solid rgba(180,180,180,.25);
+    border-radius: 14px;
+    padding: 14px 18px;
+    background: themed("containerbg");
+    margin: 14px auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,.05);
+    transition: all .25s ease;
+    cursor: pointer;
+    font-family: 'Trebuchet MS','Lucida Sans Unicode','Lucida Grande','Lucida Sans',Arial,sans-serif;
+    position: relative;   // needed for badge positioning
+
+    &:hover{
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0,0,0,.08);
+      border-color: themed("accent");
+    }
+
+    .availableuserinfo{
+      display: flex;
+      align-items: center;
+      gap: 14px;
+
+      img{
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(150,150,150,.3);
+        background: themed("bgSoft");
+      }
+
+      .details{
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        a{
+          display: flex;
+          flex-direction: column;   // name on top, username below
+          gap: 2px;
+          text-decoration: none;
+          color: inherit;
+        }
+
+        .availablename{
+          font-size: 15px;
+          font-weight: 600;
+          color: themed("textColor");
+        }
+
+        .availableusername{
+          font-size: 13px;
+          color: themed("secondaryText");
+        }
+
+        .availablebio{
+          margin-top: 8px;   // gap between username and bio
+          font-size: 13.5px;
+          color: themed("textColor2");
+          line-height: 1.4;
+          max-width: 95%;
+        }
+      }
+    }
+
+    /* Green Available Badge */
+    .availableBadge{
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(46,204,113,.15);
+      color: #2ecc71;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(46,204,113,.4);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .availableBadge::before{
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: #2ecc71;
+      border-radius: 50%;
+      box-shadow: 0 0 6px rgba(46,204,113,.8);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px){
+      padding: 12px 14px;
+
+      .availableuserinfo img{
+        width: 46px;
+        height: 46px;
+      }
+
+      .availablename{
+        font-size: 14px;
+      }
+
+      .availablebio{
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px){
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+  }
+}

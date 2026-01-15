@@ -15,6 +15,7 @@ import Leftbar from "./components/leftbar/Leftbar";
 import Rightbar from "./components/rightbar/Rightbar";
 import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
+import  Available  from "./pages/available/Available";
 import "./style.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
@@ -60,6 +61,10 @@ function App() {
         {
           path:"/profile/:id",
           element:<Profile></Profile>
+        },
+        {
+          path:"/available",
+          element:<Available></Available>
         }
       ]
     },

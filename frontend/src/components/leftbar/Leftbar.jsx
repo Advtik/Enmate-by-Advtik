@@ -32,10 +32,12 @@ const Leftbar = () => {
             <MessageOutlinedIcon></MessageOutlinedIcon>
             <span>Messages</span>
           </div>
-          <div className='item'>
-            <CheckCircleOutlinedIcon></CheckCircleOutlinedIcon>
-            <span>Available</span>
-          </div>
+          <Link to="/available" style={{textDecoration: "none",color:"inherit"}}>
+            <div className='item'>
+              <CheckCircleOutlinedIcon></CheckCircleOutlinedIcon>
+              <span>Available</span>
+            </div>
+          </Link>
           <div className='item'>
             <GroupOutlinedIcon></GroupOutlinedIcon>
             <span>Network</span>
