@@ -1,11 +1,15 @@
-.availableuser{
+.availableusers{
     display: flex;
     flex-direction: column;
-    margin-right:0px
+    margin-right:0px;
+    max-width: 650px;
+    margin-top: 25px;
+    height: 100%;
+    
     
 }
 @media(max-width:1023px){
-    .posts{
+    .availableusers{
         display: flex;
         flex-direction: column;
         // margin-right: 40px;
@@ -14,7 +18,7 @@
     }
 }
 @media(max-width:600px){
-    .posts{
+    .availableusers{
         margin-right: 40px;
         margin-left: 40px;  
         width: 100%;

@@ -2,8 +2,9 @@
 
 .availableuser{
   @include themify($themes){
-    width: 90%;
-    max-width: 550px;
+    width: 100%;
+    max-width: 600px;
+    width: 600px;
     border: 1px solid rgba(180,180,180,.25);
     border-radius: 14px;
     padding: 14px 18px;
@@ -99,6 +100,7 @@
     /* Responsive */
     @media (max-width: 768px){
       padding: 12px 14px;
+      width: 300px;
 
       .availableuserinfo img{
         width: 46px;

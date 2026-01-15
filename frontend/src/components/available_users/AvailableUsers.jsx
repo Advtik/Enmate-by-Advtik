@@ -14,7 +14,7 @@ const AvailableUsers = () => {
   });
   console.log(data);
   return (
-    <div className="availableuser">
+    <div className="availableusers">
         {error?"Sorry":
         (isLoading?"Loading":data?.map(available=>(
             <AvailableUser available={available}></AvailableUser>
