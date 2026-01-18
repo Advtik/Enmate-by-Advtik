@@ -38,7 +38,7 @@ export const getNetwork=(req,res)=>{
                     const { password, ...info } = u;
                     return info;
                 });
-                console.log(sanitize(followingdata),sanitize(followersdata));
+                // console.log(sanitize(followingdata),sanitize(followersdata));
                 return res.status(200).json({
                     following:sanitize(followingdata.rows),
                     followers:sanitize(followersdata.rows)
