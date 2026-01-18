@@ -62,6 +62,15 @@ export const login=(req,res)=>{
     })
     console.log("login is working");
 };
-export const logout=(req,res)=>{
 
+
+export const logout=(req,res)=>{
+    console.log("oye")
+    res.clearCookie("accesstoken",{
+        httpOnly:true,
+        secure:false,
+        sameSite:"lax",
+    });
+
+    return res.status(200).json("Logged out successfully");
 };

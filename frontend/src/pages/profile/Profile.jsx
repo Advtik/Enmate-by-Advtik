@@ -5,7 +5,7 @@ import Posts from "../../components/posts/posts"
 import Update from "../../components/update/Update"
 import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query'
 import makeRequest from "../../axios";
-import { useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const Profile = () => {
   const {currentUser} = useContext(AuthContext);
@@ -25,6 +25,12 @@ const Profile = () => {
   // console.log("user",data);
 
 
+  const navigate=useNavigate();
+  const logout=async()=>{
+    console.log("oye");
+    await makeRequest.post("/auth/logout");
+    navigate("/login");
+  }
   
   const {isLoading:relationshipLoading,data:relationshipdata}=useQuery({
     queryKey: ['relationship'],
@@ -67,6 +73,8 @@ const Profile = () => {
   }
   
   console.log("relation",relationshipdata);
+
+
   return (
     <div className="profile">
       <div className="container">
@@ -80,7 +88,25 @@ const Profile = () => {
           <div className="center">
             <div className="username-row">
               <span className="username">{data.username}</span>
-              <span className="settings">⚙</span>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "20px",
+                  height: "20px",
+                  borderRadius: "50%",
+                  backgroundColor: data.status === "available" ? "#22c55e" : "#9ca3af",
+                  color: "#fff",
+                  fontSize: "10px",
+                  fontWeight: "bold",
+                  marginLeft: "6px"
+                }}
+              >
+                ✓
+              </span>
+
+
             </div>
 
             <span className="name">{data.name}</span>
@@ -100,7 +126,7 @@ const Profile = () => {
 
         <div className="buttons">
           {(currentUser.id==userId)?<button onClick={()=>{setshowUpdate(true)}}>Update</button>:<button onClick={handleFollow}>{(relationshipdata.includes(currentUser.id))?"Unfollow":"Follow"}</button>}
-          <button>{(currentUser.id==userId)?((data.status==="available")?"Available":"Unavailable"):"Message"}</button>
+          {(currentUser.id==userId)?<button onClick={logout}>Logout</button>:<button>Message</button>}
         </div>  
 
       </div>
