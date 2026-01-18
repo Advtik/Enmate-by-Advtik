@@ -20,6 +20,7 @@ import "./style.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/authContext";
+import Network from "./pages/network/Network";
 
 
 function App() {
@@ -65,6 +66,10 @@ function App() {
         {
           path:"/available",
           element:<Available></Available>
+        },
+        {
+          path:"/network",
+          element:<Network></Network>
         }
       ]
     },

@@ -38,10 +38,12 @@ const Leftbar = () => {
               <span>Available</span>
             </div>
           </Link>
-          <div className='item'>
-            <GroupOutlinedIcon></GroupOutlinedIcon>
-            <span>Network</span>
-          </div>
+          <Link to="/network" style={{textDecoration:"none", color:"inherit"}}>
+            <div className='item'>
+              <GroupOutlinedIcon></GroupOutlinedIcon>
+              <span>Network</span>
+            </div>
+          </Link>
           <div className='item'>
             <NotificationsNoneOutlinedIcon></NotificationsNoneOutlinedIcon>
             <span>Notifications</span>

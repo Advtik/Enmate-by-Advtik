@@ -1,0 +1,71 @@
+@import "../../style.scss";
+
+.networks{
+  @include themify($themes){
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+    width: 100%;
+    max-width: 650px;
+    margin: 25px auto;
+    padding: 0 10px;
+    height: 100%;
+
+    .following,
+    .followers{
+      background: themed("containerbg");
+      border: 1px solid rgba(180,180,180,.25);
+      border-radius: 14px;
+      padding: 12px 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.05);
+      transition: all .25s ease;
+      min-width: 300px;
+
+      h3{
+        font-size: 14px;
+        font-weight: 600;
+        color: themed("textColorSoft");
+        margin-bottom: 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid rgba(180,180,180,.25);
+      }
+
+      p{
+        font-size: 13px;
+        color: themed("textColorSoft");
+        padding: 6px 0;
+      }
+    }
+  }
+}
+
+/* Tablet */
+@media(max-width:1023px){
+  .networks{
+    @include themify($themes){
+      max-width: 100%;
+      margin: 20px auto;
+      padding: 0 24px;
+    }
+  }
+}
+
+/* Mobile */
+@media(max-width:600px){
+  .networks{
+    @include themify($themes){
+      margin: 15px auto;
+      padding: 0 16px;
+      gap: 14px;
+
+      .following,
+      .followers{
+        padding: 10px 12px;
+
+        h3{
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
