@@ -8,11 +8,14 @@ import authRoute from "./routes/auth.js";
 import relationshipRoute from "./routes/relationships.js"
 import availableRoute from "./routes/available.js"
 import networkRoute from "./routes/network.js"
+import conversationRoute from "./routes/conversation.js"
+import messageRoute from "./routes/message.js"
 import cors from "cors";
 import cookieparser from "cookie-parser";
 import dotenv from "dotenv";
 import multer from "multer";
 import {uploadoncloud} from "./utils/cloudinary.js"
+import { getMessages } from "./controllers/message.js";
 
 //middlewares
 app.use((req,res,next)=>{
@@ -21,7 +24,7 @@ app.use((req,res,next)=>{
 });
 app.use(express.json());
 app.use(cors({
-    origin:"http://192.168.1.36:5173",
+    origin:"http://192.168.1.40:5173",
     credentials:true
 }));
 app.use(cookieparser());
@@ -63,6 +66,8 @@ app.use("/api/likes",likeRoute);
 app.use("/api/relationships",relationshipRoute);
 app.use("/api/available",availableRoute);
 app.use("/api/network",networkRoute);
+app.use("/api/conversation",conversationRoute);
+app.use("/api/message",messageRoute);
 
 
 app.listen(8800,()=>{
