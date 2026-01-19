@@ -8,7 +8,7 @@ import makeRequest from "../../axios";
 import { useNavigate, useLocation } from 'react-router-dom'
 
 const Profile = () => {
-  const {currentUser} = useContext(AuthContext);
+  const {currentUser,setCurrentUser} = useContext(AuthContext);
   const[showUpdate,setshowUpdate]=useState(false);
 
   const userId=useLocation().pathname.split("/")[2];
@@ -29,6 +29,7 @@ const Profile = () => {
   const logout=async()=>{
     console.log("oye");
     await makeRequest.post("/auth/logout");
+    setCurrentUser(null);
     navigate("/login");
   }
   

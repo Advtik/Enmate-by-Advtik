@@ -8,7 +8,7 @@ export const AuthContextProvider = ({ children }) => {
   );
 
   const login = async(inputs) => {
-    const res=await axios.post("http://192.168.1.36:8800/api/auth/login",inputs,{
+    const res=await axios.post("http://192.168.1.40:8800/api/auth/login",inputs,{
       withCredentials:true,
     })
     setCurrentUser(res.data);
@@ -20,7 +20,7 @@ export const AuthContextProvider = ({ children }) => {
   }, [currentUser]);
 
   return (
-    <AuthContext.Provider value={{ currentUser, login }}>
+    <AuthContext.Provider value={{ currentUser,setCurrentUser, login }}>
       {children}
     </AuthContext.Provider>
   );
