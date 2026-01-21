@@ -1,0 +1,38 @@
+@import "../../style.scss";
+
+.chats {
+  @include themify($themes) {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    height: 100%;
+    padding: 8px 8px;
+    overflow-y: auto;
+    // background-color: themed("bg");
+
+    // smooth scroll (nice touch)
+    scroll-behavior: smooth;
+
+    // hide ugly scrollbar but keep functionality
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: themed("border");
+      border-radius: 10px;
+    }
+
+    // loading / error states
+    .chats-state {
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 14px;
+      color: themed("textColorSoft");
+    }
+  }
+}
