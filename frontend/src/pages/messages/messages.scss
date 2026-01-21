@@ -1,0 +1,91 @@
+@import "../../style.scss";
+
+.messages{
+  @include themify($themes){
+    display: flex;
+    height: calc(100vh - 71px);
+    background: themed("bg");
+    width: 100vw;
+    font-size: larger;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+    /* LEFT CHAT LIST */
+    .leftchat{
+      width: 30%;
+      min-width: 260px;
+      max-width: 600px;
+      background: themed("containerbg");
+      border-right: 1px solid rgba(180,180,180,.25);
+      display: flex;
+      flex-direction: column;
+
+      .leftchat-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 12px 14px;
+        border-bottom: 1px solid rgba(180,180,180,.25);
+
+        h3{
+          font-size: 14px;
+          font-weight: 600;
+          color: themed("textColor");
+        }
+
+        .backtohome{
+          padding: 6px 10px;
+          font-size: 12px;
+          border-radius: 8px;
+          border: 1px solid rgba(180,180,180,.3);
+          background: themed("bg");
+          color: themed("textColor");
+          cursor: pointer;
+          transition: background .2s ease;
+
+          &:hover{
+            background: themed("hoverBg");
+          }
+        }
+      }
+    }
+
+    /* RIGHT CHAT WINDOW */
+    .rightchat{
+      flex: 1;
+      background: themed("bg");
+      display: flex;
+      flex-direction: column;
+
+      
+    }
+  }
+}
+
+/* TABLET */
+@media(max-width:1023px){
+  .messages{
+    .leftchat{
+      width: 35%;
+    }
+  }
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .messages{
+    flex-direction: column;
+
+    .leftchat{
+      width: 100%;
+      max-width: 100%;
+      border-right: none;
+      border-bottom: 1px solid rgba(180,180,180,.25);
+    }
+
+    .rightchat{
+      flex: 1;
+      width: 100%;
+    }
+  }
+}
