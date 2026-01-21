@@ -1,5 +1,7 @@
+
 import express from "express";
 const app=express();
+import { Server, Socket } from "socket.io";
 import userRoute from "./routes/users.js";
 import postRoute from "./routes/posts.js";
 import commentRoute from "./routes/comments.js";
@@ -70,6 +72,55 @@ app.use("/api/message",messageRoute);
 app.use("/api/chats",chatsRoute);
 
 
-app.listen(8800,()=>{
+const server=app.listen(8800,()=>{
     console.log("Api working");
+});
+
+const io=new Server(server, {
+  cors:{
+    origin:"http://192.168.1.40:5173",
+    credentials:true
+  }
+})
+
+const onlineUsers=new Map();
+io.on("connection",(socket)=>{
+  console.log("socket connected: ",socket.id);
+
+  socket.on("addUser",(userId)=>{
+    onlineUsers.set(userId,socket.id);
+    console.log("online users: ",onlineUsers);
+  })
+
+  socket.on("sendMessage",({receiverId,senderId,text,conversationId})=>{
+    const receiverSocketId=onlineUsers.get(receiverId);
+    if(receiverSocketId){
+      io.to(receiverSocketId).emit("receiveMessage",{
+        sender_id:senderId,
+        text,
+        conversation_id: conversationId,
+        created_at:new Date(),
+        seen: false
+      });
+    }
+    // const senderSocketId=onlineUsers.get(senderId);
+    // io.to(senderSocketId).emit("receiveMessage",{
+    //     sender_id:senderId,
+    //     text,
+    //     conversation_id: conversationId,
+    //     created_at:new Date(),
+    //     seen: false
+    //   });
+    console.log("sending to", receiverSocketId);
+  })
+
+  socket.on("disconnect",()=>{
+    console.log("socket disconnected: ",socket.id);
+    for (const [userId, socketId] of onlineUsers.entries()) {
+      if (socketId === socket.id) {
+        onlineUsers.delete(userId);
+        break;
+      }
+    }
+  });
 });
