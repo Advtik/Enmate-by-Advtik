@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 export const AuthContext = createContext();
+import { socket } from "../socket";
 
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(
@@ -19,6 +20,22 @@ export const AuthContextProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }, [currentUser]);
 
+
+  useEffect(()=>{
+    if(currentUser){
+      socket.connect();
+    }
+    else{
+      socket.disconnect();
+      console.log("disconnected");
+    }
+  },[currentUser]);
+  
+  useEffect(()=>{
+    if(currentUser){
+      socket.emit("addUser",currentUser.id);
+    }
+  },[currentUser]);
   return (
     <AuthContext.Provider value={{ currentUser,setCurrentUser, login }}>
       {children}

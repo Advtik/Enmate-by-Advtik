@@ -17,11 +17,12 @@ import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
 import  Available  from "./pages/available/Available";
 import "./style.scss";
-import { useContext } from "react";
+import { useContext,useEffect } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/authContext";
 import Network from "./pages/network/Network";
 import Messages from "./pages/messages/Messages";
+import { socket } from "./socket";
 
 
 function App() {

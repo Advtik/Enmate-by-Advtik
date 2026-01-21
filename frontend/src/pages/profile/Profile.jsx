@@ -31,6 +31,7 @@ const Profile = () => {
     await makeRequest.post("/auth/logout");
     setCurrentUser(null);
     navigate("/login");
+    localStorage.removeItem("user");
   }
   
   const {isLoading:relationshipLoading,data:relationshipdata}=useQuery({

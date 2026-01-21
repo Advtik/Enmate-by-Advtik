@@ -2,10 +2,11 @@ import Message from "../message/Message";
 import "./chatmessages.scss";
 import { useQuery } from "@tanstack/react-query";
 import makeRequest from "../../axios";
-import { useRef } from "react";
+import { socket } from "../../socket";
+import { useRef, useState } from "react";
 import { useEffect } from "react";
 
-const ChatMessages = ({ activeConversation }) => {
+const ChatMessages = ({ activeConversation, chatMessages,setChatMessages }) => {
 
   const formatDateLabel = (dateStr) => {
     const date = new Date(dateStr);
@@ -41,33 +42,55 @@ const ChatMessages = ({ activeConversation }) => {
       return res.data;
     },
     enabled: !!activeConversation, // 🔥 VERY IMPORTANT
+    refetchOnWindowFocus: false,
+    staleTime: Infinity
   });
 
-  //auto scroll to bottom
+  
+  useEffect(() => {
+    const handler = (message) => {
+      setChatMessages(prev => {
+        if (message.conversation_id !== activeConversation?.conversation_id) {
+          return prev;
+        }
+        return [...prev, message];
+      });
+    };
+    
+    socket.on("receiveMessage", handler);
+    
+    return () => socket.off("receiveMessage", handler);
+  }, []);
+  
+  useEffect(()=>{
+    if(data){
+      setChatMessages(data);
+    }
+  },[data]);
+  
   useEffect(()=>{
     messagesEndRef?.current?.scrollIntoView({behavior:"smooth"});
-  },[data]);
-
-
+  },[chatMessages]);
+  
   if (!activeConversation) {
     return <div className="messages empty">Select a chat</div>;
   }
-
+  
   if (isLoading) {
     return <div className="messages loading">Loading messages...</div>;
   }
-
+  
   if (error) {
     return <div className="messages error">Something went wrong</div>;
   }
-
+  
   return (
     <div className="chatmessages">
-      {data.map((message, index) => {
+      {chatMessages.map((message, index) => {
         const currentDate = new Date(message.created_at).toDateString();
         const prevDate =
           index > 0
-            ? new Date(data[index - 1].created_at).toDateString()
+            ? new Date(chatMessages[index - 1].created_at).toDateString()
             : null;
 
         const showDateSeparator = currentDate !== prevDate;
