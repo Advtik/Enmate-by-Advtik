@@ -1,16 +1,40 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import "./messages.scss";
 import Chats from "../../components/chats/Chats";
 import ChatWindow from "../../components/chatwindow/ChatWindow";
-import { useState } from "react";
-
+import { useState,useEffect } from "react";
+import makeRequest from "../../axios";
 const Messages = () => {
   const [activeConversation,setActiveConversation]= useState(null);
   console.log("convo",activeConversation);
+
+  const [searchParams]=useSearchParams();
+  const profileUserId=searchParams.get("userId");
+  console.log(profileUserId);
+
+  useEffect(() => {
+    if (!profileUserId) return;
+
+    const getConversation = async () => {
+      try{
+        console.log("hello");
+        const res = await makeRequest.get("/conversation/"+profileUserId);
+        console.log("res",res.data.id);
+        setActiveConversation(res.data);
+      }
+      catch(err){
+        console.log("conversation error", err.response?.data||err.message);
+      }
+    };
+    getConversation();
+
+  }, [profileUserId]);
+
+  console.log("activeConversation",activeConversation);
+
   
   return (
     <div className="messages">
-
       {/* LEFT: chat list */}
       <div className="leftchat">
         <div className="leftchat-header">

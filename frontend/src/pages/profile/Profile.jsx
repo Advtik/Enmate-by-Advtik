@@ -15,6 +15,10 @@ const Profile = () => {
   console.log("userId",userId);
   console.log(currentUser);
 
+  const handleMessaging=()=>{
+    navigate("/messages?userId="+userId);
+  }
+
   const { isLoading, error, data}=useQuery({
       queryKey: ['user'],
       queryFn:async()=>{
@@ -128,7 +132,7 @@ const Profile = () => {
 
         <div className="buttons">
           {(currentUser.id==userId)?<button onClick={()=>{setshowUpdate(true)}}>Update</button>:<button onClick={handleFollow}>{(relationshipdata.includes(currentUser.id))?"Unfollow":"Follow"}</button>}
-          {(currentUser.id==userId)?<button onClick={logout}>Logout</button>:<button>Message</button>}
+          {(currentUser.id==userId)?<button onClick={logout}>Logout</button>:<button onClick={handleMessaging}>Message</button>}
         </div>  
 
       </div>
