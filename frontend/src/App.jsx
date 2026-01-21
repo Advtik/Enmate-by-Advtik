@@ -21,6 +21,7 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/authContext";
 import Network from "./pages/network/Network";
+import Messages from "./pages/messages/Messages";
 
 
 function App() {
@@ -36,6 +37,19 @@ function App() {
             <Leftbar></Leftbar>
             <Outlet></Outlet>
             <Rightbar></Rightbar>
+          </div>
+        </div>
+      </QueryClientProvider>
+    )
+  }
+
+  const MessagingLayout=()=>{
+    return (
+      <QueryClientProvider client={queryClient}>
+        <div className={`theme-${darkMode? "dark" : "light"}`}>
+          <Navbar></Navbar>
+          <div style={{display:"flex", flexDirection:"row"}}>
+            <Messages></Messages>
           </div>
         </div>
       </QueryClientProvider>
@@ -80,6 +94,12 @@ function App() {
     {
       path: "/register",
       element: <Register></Register>
+    },
+    {
+      path:"/messages",
+      element:<ProtectedRoute>
+        <MessagingLayout></MessagingLayout>
+      </ProtectedRoute>
     }
   ]);
   return (
