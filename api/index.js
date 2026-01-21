@@ -15,8 +15,7 @@ import cookieparser from "cookie-parser";
 import dotenv from "dotenv";
 import multer from "multer";
 import {uploadoncloud} from "./utils/cloudinary.js"
-import { getMessages } from "./controllers/message.js";
-
+import chatsRoute from "./routes/chats.js"
 //middlewares
 app.use((req,res,next)=>{
     res.header("Access-Control-Allow-Credentials", true);
@@ -68,6 +67,7 @@ app.use("/api/available",availableRoute);
 app.use("/api/network",networkRoute);
 app.use("/api/conversation",conversationRoute);
 app.use("/api/message",messageRoute);
+app.use("/api/chats",chatsRoute);
 
 
 app.listen(8800,()=>{
