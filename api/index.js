@@ -15,6 +15,7 @@ import messageRoute from "./routes/message.js"
 import cors from "cors";
 import cookieparser from "cookie-parser";
 import dotenv from "dotenv";
+dotenv.config();
 import multer from "multer";
 import {uploadoncloud} from "./utils/cloudinary.js"
 import chatsRoute from "./routes/chats.js"
@@ -25,7 +26,7 @@ app.use((req,res,next)=>{
 });
 app.use(express.json());
 app.use(cors({
-    origin:"http://192.168.1.40:5173",
+    origin:`${process.env.FRONTEND_URL}`,
     credentials:true
 }));
 app.use(cookieparser());
@@ -33,15 +34,8 @@ app.use(cookieparser());
 //file uploading
 
 //file storing on disk storage
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, '../frontend/public/upload')
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now()+file.originalname)
-  }
-})
-const upload = multer({ storage: storage })
+const storage = multer.memoryStorage();
+const upload = multer({storage })
 
 //posting on the upload file route
 app.post("/api/upload",upload.single("file"),async(req,res)=>{
@@ -51,7 +45,7 @@ app.post("/api/upload",upload.single("file"),async(req,res)=>{
       return res.status(400).json("No file uploaded");
     }
     console.log(file.path);
-    const cloudresponse=await uploadoncloud(file.path);
+    const cloudresponse=await uploadoncloud(file.buffer);
 
     if (!cloudresponse) {
       return res.status(500).json("Cloud upload failed");
@@ -71,14 +65,14 @@ app.use("/api/conversation",conversationRoute);
 app.use("/api/message",messageRoute);
 app.use("/api/chats",chatsRoute);
 
-
-const server=app.listen(8800,()=>{
+const PORT=process.env.PORT||8800;
+const server=app.listen(PORT,()=>{
     console.log("Api working");
 });
 
 const io=new Server(server, {
   cors:{
-    origin:"http://192.168.1.40:5173",
+    origin:`${process.env.FRONTEND_URL}`,
     credentials:true
   }
 })

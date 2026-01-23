@@ -32,7 +32,6 @@ export const getMessages = (req, res) => {
                 return res.status(403).json("You are not part of this conversation");
             }
 
-            // 2️⃣ Fetch messages
             const getMessagesQuery = `
                 SELECT 
                     m.id,

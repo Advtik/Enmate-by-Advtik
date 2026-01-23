@@ -29,7 +29,6 @@ export const getOrCreateConversation = async (req, res) => {
   try {
     await db.query("BEGIN");
 
-    // 1️⃣ Check if conversation already exists
     const checkQuery = `
       SELECT c.id AS conversation_id
       FROM enmateschema.conversations c
@@ -47,10 +46,8 @@ export const getOrCreateConversation = async (req, res) => {
     let conversationId;
 
     if (existing.rows.length > 0) {
-      // Conversation already exists
       conversationId = existing.rows[0].conversation_id;
     } else {
-      // 2️⃣ Create new conversation
       const createConversationQuery = `
         INSERT INTO enmateschema.conversations
         DEFAULT VALUES
@@ -60,7 +57,6 @@ export const getOrCreateConversation = async (req, res) => {
       const convoRes = await db.query(createConversationQuery);
       conversationId = convoRes.rows[0].id;
 
-      // 3️⃣ Add both users to conversation_members
       const addMembersQuery = `
         INSERT INTO enmateschema.conversation_members
         (conversation_id, user_id)
@@ -74,7 +70,6 @@ export const getOrCreateConversation = async (req, res) => {
       ]);
     }
 
-    // 4️⃣ Fetch other user's info
     const userQuery = `
       SELECT 
         id AS user_id,
@@ -89,7 +84,6 @@ export const getOrCreateConversation = async (req, res) => {
 
     await db.query("COMMIT");
 
-    // 5️⃣ Final response (STABLE SHAPE)
     return res.status(200).json({
       conversation_id: conversationId,
       ...userData.rows[0],
