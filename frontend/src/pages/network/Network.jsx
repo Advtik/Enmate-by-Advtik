@@ -1,6 +1,6 @@
 import React from 'react'
 import Networks from '../../components/networks/Networks'
-import "./Network.scss"
+import "./network.scss"
 
 const Network = () => {
   return (
