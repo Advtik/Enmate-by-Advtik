@@ -52,7 +52,7 @@ const ChatWindow = ({ activeConversation }) => {
     <div className="rightchat">
       {/* HEADER */}
       <div className="chatHeader">
-        <Link to={`/profile/${activeConversation.user_id}`} style={{textDecoration:"none"}}> 
+        <Link to={`/profile/${activeConversation.username}`} style={{textDecoration:"none"}}> 
         <div className="chatHeaderLeft">
           <img src={activeConversation.profilepic} alt="profile" />
           <div className="chatHeaderInfo">

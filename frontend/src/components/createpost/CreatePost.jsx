@@ -6,8 +6,7 @@ import {
 } from '@tanstack/react-query'
 import makeRequest from "../../axios";
 
-const CreatePost=()=>{
-    const [open,setopen]=useState(false);
+const CreatePost=({open,setOpen})=>{
     const [desc,setdesc]=useState("");
     const [title,settitle]=useState("");
     const [type,settype]=useState("");
@@ -41,7 +40,6 @@ const CreatePost=()=>{
                 setdesc("");
                 settype("");
                 setcontent("");
-                setopen(false);
                 setfile(null);
             },
             onError: (err) => {
@@ -58,17 +56,13 @@ const CreatePost=()=>{
 
     return(
         <div className="create">
-            <div className="inner">
-                <span>Wanna post something? or finding person to team up with?</span>
-                <button className="create_button" onClick={()=>setopen(true)}>Create En</button>
-            </div>
 
-            {open && (
+            {( 
                 <div className="overlay">
                     <div className="modal">
                         <div className="top">
                         <h2>Create En</h2>
-                        <button onClick={() => setopen(false)} className="close">&times;</button> 
+                        <button onClick={() => setOpen(false)} className="close">&times;</button> 
                         </div> 
 
                         <form className="createform" onSubmit={handleClick}>

@@ -23,19 +23,22 @@ import { AuthContext } from "./context/authContext";
 import Network from "./pages/network/Network";
 import Messages from "./pages/messages/Messages";
 import { socket } from "./socket";
-
-
+import { useState } from "react";
+import CreatePost from "./components/createpost/CreatePost";
+import CreateEn from "./pages/create-en/CreateEn";
 function App() {
   const queryClient = new QueryClient();
   const {currentUser}=React.useContext(AuthContext);
   const {darkMode} = React.useContext(DarkModeContext); 
+  const [open,setOpen]=useState(false);
+
   const Layout=()=>{
     return (
       <QueryClientProvider client={queryClient}>
         <div className={`theme-${darkMode? "dark" : "light"}`}>
           <Navbar></Navbar>
           <div style={{display:"flex", flexDirection:"row"}}>
-            <Leftbar></Leftbar>
+            <Leftbar open={open} setOpen={setOpen}></Leftbar>
             <Outlet></Outlet>
             <Rightbar></Rightbar>
           </div>
@@ -75,7 +78,7 @@ function App() {
           element:<Home></Home>
         },
         {
-          path:"/profile/:id",
+          path:"/profile/:username",
           element:<Profile></Profile>
         },
         {
@@ -85,6 +88,9 @@ function App() {
         {
           path:"/network",
           element:<Network></Network>
+        },{
+          path:"/create",
+          element: <CreateEn open={open} setOpen={setOpen}></CreateEn>
         }
       ]
     },

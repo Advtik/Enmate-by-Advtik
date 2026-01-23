@@ -6,29 +6,30 @@ import Update from "../../components/update/Update"
 import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query'
 import makeRequest from "../../axios";
 import { useNavigate, useLocation } from 'react-router-dom'
+import CreatePost from '../../components/createpost/CreatePost'
 
-const Profile = () => {
+const Profile = ({open,setOpen}) => {
   const {currentUser,setCurrentUser} = useContext(AuthContext);
   const[showUpdate,setshowUpdate]=useState(false);
 
-  const userId=useLocation().pathname.split("/")[2];
-  console.log("userId",userId);
+  const username=useLocation().pathname.split("/")[2];
+  // console.log("userId",userId);
   console.log(currentUser);
 
   const handleMessaging=()=>{
-    navigate("/messages?userId="+userId);
+    navigate("/messages?userId="+data.id);
   }
 
   const { isLoading, error, data}=useQuery({
       queryKey: ['user'],
       queryFn:async()=>{
-          const res=await makeRequest.get("/users/find/"+userId)
+          const res=await makeRequest.get("/users/find/"+username)
           return res.data; 
       }
   });
   // console.log("user",data);
 
-
+  // let userId=data.id;
   const navigate=useNavigate();
   const logout=async()=>{
     console.log("oye");
@@ -41,7 +42,7 @@ const Profile = () => {
   const {isLoading:relationshipLoading,data:relationshipdata}=useQuery({
     queryKey: ['relationship'],
     queryFn:async()=>{
-      const res=await makeRequest.get("/relationships?followedUserId="+userId)
+      const res=await makeRequest.get("/relationships?followedUserId="+data.id)
       return res.data; 
     }
   });
@@ -50,8 +51,8 @@ const Profile = () => {
   const mutation = useMutation(
         {
             mutationFn: (following)=>{
-                if(following) return makeRequest.delete("/relationships?userId="+userId);
-                return makeRequest.post("/relationships?userId="+userId);
+                if(following) return makeRequest.delete("/relationships?userId="+data.id);
+                return makeRequest.post("/relationships?userId="+data.id);
             },
             onSuccess:()=>{
                 // Invalidate and refetch
@@ -67,7 +68,7 @@ const Profile = () => {
         mutation.mutate(relationshipdata?.includes(currentUser.id));
     }
   if(isLoading){
-    return <div>Loading profile...</div>;
+    return <div className='relationshipLoading'>Loading profile...</div>;
   }
   
   if(error){
@@ -75,7 +76,7 @@ const Profile = () => {
   }
   
   if(relationshipLoading){
-    return <div>Loading relations</div>
+    return <div className='relationshipLoading'>Loading Profile..</div>
   }
   
   console.log("relation",relationshipdata);
@@ -83,6 +84,7 @@ const Profile = () => {
 
   return (
     <div className="profile">
+      {open && <CreatePost open={open} setOpen={setOpen}></CreatePost>}
       <div className="container">
 
         <div className="top">
@@ -131,8 +133,8 @@ const Profile = () => {
         </div>
 
         <div className="buttons">
-          {(currentUser.id==userId)?<button onClick={()=>{setshowUpdate(true)}}>Update</button>:<button onClick={handleFollow}>{(relationshipdata.includes(currentUser.id))?"Unfollow":"Follow"}</button>}
-          {(currentUser.id==userId)?<button onClick={logout}>Logout</button>:<button onClick={handleMessaging}>Message</button>}
+          {(currentUser.id==data.id)?<button onClick={()=>{setshowUpdate(true)}}>Update</button>:<button onClick={handleFollow}>{(relationshipdata.includes(currentUser.id))?"Unfollow":"Follow"}</button>}
+          {(currentUser.id==data.id)?<button onClick={logout}>Logout</button>:<button onClick={handleMessaging}>Message</button>}
         </div>  
 
       </div>

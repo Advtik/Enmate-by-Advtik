@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./home.scss"
 import Posts from "../../components/posts/posts"
 import CreatePost from '../../components/createpost/CreatePost'
-const Home = () => {
+const Home = ({open,setOpen}) => {
   return (
     <div className='home'>
-      <CreatePost></CreatePost>
       <Posts></Posts>
     </div>
   )

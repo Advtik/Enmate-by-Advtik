@@ -17,6 +17,7 @@ import { AuthContext } from '../../context/authContext';
 const Navbar = ({post}) => {
   const {darkMode,toggle} = React.useContext(DarkModeContext); 
   const {currentUser} = React.useContext(AuthContext); 
+  console.log(currentUser);
   return (
     <div className='navbar'>
         <div className="left">
@@ -37,7 +38,7 @@ const Navbar = ({post}) => {
             <NotificationsOutlinedIcon></NotificationsOutlinedIcon>
             <div className='user'>
                 <img src={currentUser.profilepic}></img>
-                <Link to={`/profile/${currentUser.id}`}
+                <Link to={`/profile/${currentUser.username}`}
                     style={{ textDecoration: "none", color: "inherit" }}
                 >
                     <span>{currentUser.name}</span>

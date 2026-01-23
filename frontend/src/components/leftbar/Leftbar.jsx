@@ -12,12 +12,18 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { DarkModeContext } from '../../context/darkModeContext';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
-
-import CreatePost from '../../components/createpost/CreatePost'
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
+import CreatePost from '../../components/createpost/CreatePost';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
 import { Link } from 'react-router-dom';
-const Leftbar = () => {
+const Leftbar = ({open,setOpen}) => {
   const {darkMode,toggle} = React.useContext(DarkModeContext); 
+  const handlecreate=()=>{
+    return (
+      <CreatePost></CreatePost>
+    )
+  }
   return (
     <div className='leftbar'>
       <div className='container'>
@@ -46,10 +52,12 @@ const Leftbar = () => {
               <span>Network</span>
             </div>
           </Link>
-          <div className='item'>
-            <NotificationsNoneOutlinedIcon></NotificationsNoneOutlinedIcon>
-            <span>Notifications</span>
-          </div>
+          <Link to="/create" style={{textDecoration:"none", color:"inherit"}}>
+            <div className='item' onClick={()=>{setOpen(true)}}>
+              <CreateOutlinedIcon></CreateOutlinedIcon>
+              <span>Create En</span>
+            </div>
+          </Link>
           <div className='item'>
             <BookmarkBorderOutlinedIcon></BookmarkBorderOutlinedIcon>
             <span>Bookmark</span>
@@ -58,8 +66,8 @@ const Leftbar = () => {
         <div className='more'>
           {/* {darkMode?<WbSunnyOutlinedIcon onClick={toggle} className='icon'></WbSunnyOutlinedIcon>:<DarkModeOutlinedIcon onClick={toggle} className='icon'></DarkModeOutlinedIcon>} */}
           <div className='item'>
-            <DehazeOutlinedIcon></DehazeOutlinedIcon>
-            <span>More</span>
+            <SettingsOutlinedIcon></SettingsOutlinedIcon>
+            <span>Settings</span>
           </div>
           <div className='item'>
             <SmartButtonOutlinedIcon></SmartButtonOutlinedIcon>

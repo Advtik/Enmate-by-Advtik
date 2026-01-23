@@ -1,5 +1,17 @@
 @import "../../style.scss";
 
+.relationshipLoading{
+  @include themify($themes) {
+    flex: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background: themed("bg");
+    color: themed("textColor");
+    padding-top: 30px;
+}
+}
 .profile {
   @include themify($themes) {
     flex: 6;
