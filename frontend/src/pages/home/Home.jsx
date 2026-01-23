@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import "./home.scss"
-import Posts from "../../components/posts/posts"
+import Posts from "../../components/posts/Posts"
 import CreatePost from '../../components/createpost/CreatePost'
 const Home = ({open,setOpen}) => {
   return (

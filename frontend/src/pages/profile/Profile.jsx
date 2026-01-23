@@ -1,7 +1,7 @@
 import React, { useContext,useState } from 'react'
 import "./profile.scss"
 import { AuthContext } from '../../context/authContext'
-import Posts from "../../components/posts/posts"
+import Posts from "../../components/posts/Posts"
 import Update from "../../components/update/Update"
 import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query'
 import makeRequest from "../../axios";

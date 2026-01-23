@@ -1,6 +1,6 @@
 import {io} from "socket.io-client";
 
-export const socket=io("http://192.168.1.40:8800",{
+export const socket=io("https://enmate-by-advtik.onrender.com",{
     withCredentials:true,
     autoConnect:false
 });
