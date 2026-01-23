@@ -54,8 +54,8 @@ export const login=(req,res)=>{
         res
             .cookie("accesstoken",token,{
                 httpOnly:true,
-                secure:false,
-                sameSite:"lax",
+                secure:true,
+                sameSite:"none",
             })
             .status(200)
             .json(others);
@@ -68,8 +68,8 @@ export const logout=(req,res)=>{
     console.log("oye")
     res.clearCookie("accesstoken",{
         httpOnly:true,
-        secure:false,
-        sameSite:"lax",
+        secure:true,
+        sameSite:"none",
     });
 
     return res.status(200).json("Logged out successfully");

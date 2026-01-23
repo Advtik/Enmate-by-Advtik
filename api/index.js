@@ -70,6 +70,8 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+app.set("trust proxy", 1);
+
 const PORT=process.env.PORT||8800;
 const server=app.listen(PORT,()=>{
     console.log("Api working");
