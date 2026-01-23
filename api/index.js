@@ -65,6 +65,11 @@ app.use("/api/conversation",conversationRoute);
 app.use("/api/message",messageRoute);
 app.use("/api/chats",chatsRoute);
 
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
 const PORT=process.env.PORT||8800;
 const server=app.listen(PORT,()=>{
     console.log("Api working");
