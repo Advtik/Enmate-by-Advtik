@@ -1,157 +1,197 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./update.scss";
 import {
-    useQuery,
+  useQuery,
   useMutation,
   useQueryClient,
-} from '@tanstack/react-query'
+} from "@tanstack/react-query";
 import makeRequest from "../../axios";
-import { useLocation } from 'react-router-dom'
+import { useLocation } from "react-router-dom";
 
+const Update = ({ onClose }) => {
+  const userId = useLocation().pathname.split("/")[2];
 
-const Update=({onClose})=>{
-    const userId=useLocation().pathname.split("/")[2];
-    const { isLoading, error, data}=useQuery({
-        queryKey: ['user'],
-        queryFn:async()=>{
-            const res=await makeRequest.get("/users/find/"+userId)
-            return res.data; 
-        }
+  // --------------------
+  // FETCH USER
+  // --------------------
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["user", userId],
+    queryFn: async () => {
+      const res = await makeRequest.get("/users/find/" + userId);
+      return res.data;
+    },
+  });
+
+  // --------------------
+  // LOCAL STATE (SAFE DEFAULTS)
+  // --------------------
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
+  const [city, setCity] = useState("");
+  const [site, setSite] = useState("");
+  const [status, setStatus] = useState("");
+  const [file, setFile] = useState(null);
+
+  // --------------------
+  // SYNC STATE AFTER DATA LOAD
+  // --------------------
+  useEffect(() => {
+    if (data) {
+      setEmail(data.email || "");
+      setName(data.name || "");
+      setBio(data.bio || "");
+      setCity(data.city || "");
+      setSite(data.site || "");
+      setStatus(data.status || "");
+      setFile(data.profilepic || null);
+    }
+  }, [data]);
+
+  // --------------------
+  // UPLOAD IMAGE
+  // --------------------
+  const upload = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await makeRequest.post("/upload", formData);
+      return res.data;
+    } catch (err) {
+      console.error("Image upload failed", err);
+      return null;
+    }
+  };
+
+  // --------------------
+  // UPDATE PROFILE
+  // --------------------
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (updatedProfile) => {
+      return makeRequest.put("/users", updatedProfile);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user", userId] });
+      onClose();
+    },
+    onError: (err) => {
+      console.error("Profile update failed:", err);
+    },
+  });
+
+  // --------------------
+  // SUBMIT HANDLER
+  // --------------------
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    let imgUrl = data.profilepic;
+    if (file instanceof File) {
+      const uploaded = await upload();
+      if (uploaded) imgUrl = uploaded;
+    }
+
+    mutation.mutate({
+      name,
+      email,
+      bio,
+      city,
+      site,
+      status,
+      profilepic: imgUrl,
     });
+  };
 
-    const [email,setemail]=useState(data.email);
-    const [name,setname]=useState(data.name);
-    const [bio,setbio]=useState(data.bio);
-    const [city,setcity]=useState(data.city);
-    const [site,setsite]=useState(data.site);
-    const [status,setstatus]=useState(data.status);
-    const [file,setfile]=useState(data.profilepic);
+  // --------------------
+  // LOADING / ERROR
+  // --------------------
+  if (isLoading) return <div>Loading profile...</div>;
+  if (error) return <div>Failed to load profile</div>;
 
-    const upload= async()=>{
-        try{
-            const formdata=new FormData();
-            formdata.append("file",file);
-            const res=await makeRequest.post("/upload",formdata);
-            return res.data;
-        }
-        catch(err){
-            console.log(err);
-        }
-    }
+  // --------------------
+  // UI
+  // --------------------
+  return (
+    <div className="overlay">
+      <div className="profileModal">
 
-    const queryClient=useQueryClient();
-    
-    const mutation = useMutation(
-        {
-            mutationFn: (profileUpdate)=>{
-                return makeRequest.put("/users",profileUpdate);
-            },
-            onSuccess:()=>{
-                // Invalidate and refetch
-                queryClient.invalidateQueries({ queryKey: ['user'] });
-                // reset form
-                setname(data.name);
-                setemail(data.email);
-                setbio(data.bio);
-                setcity(data.city);
-                setfile(data.profilepic);
-                setsite(data.site);
-                setstatus(data.status);
-                onClose();
-            },
-            onError: (err) => {
-                console.error("Profile updation failed:", err);
-            }
-        }
-    )
-    const handleClick=async(e)=>{
-        e.preventDefault();
-        let imgUrl = data.profilepic;
-        if(file instanceof File){
-            imgUrl= await upload();
-        }
-        mutation.mutate({name,email,bio,city,profilepic:imgUrl,site,status});
-    }
-    if(isLoading){
-        return <div>Loading profile...</div>;
-    }
-    
-    if(error){
-        return <div>Failed to load profile</div>;
-    }
+        {/* LEFT FORM */}
+        <div className="formSide">
+          <div className="topBar">
+            <h2>Update Profile</h2>
+            <button className="close" onClick={onClose}>×</button>
+          </div>
 
-    return(
-        <div className="overlay">
-            <div className="profileModal">
-                
-                {/* LEFT SIDE FORM */}
-                <div className="formSide">
-                <div className="topBar">
-                    <h2>Update Profile</h2>
-                    <button className="close" onClick={onClose}>×</button>
-                </div>
+          <form className="profileForm" onSubmit={handleSubmit}>
 
-                <form onSubmit={handleClick} className="profileForm">
-
-                    <div className="row">
-                    <span>Name</span>
-                    <input placeholder="Your name" maxLength={40} onChange={(e)=>setname(e.target.value)} />
-                    </div>
-
-                    <div className="row">
-                    <span>Email</span>
-                    <input placeholder="Your email" maxLength={45} onChange={(e)=>setemail(e.target.value)} />
-                    </div>
-
-                    <div className="row">
-                    <span>Bio</span>
-                    <input placeholder="Short bio" maxLength={180} onChange={(e)=>setbio(e.target.value)} />
-                    </div>
-
-                    <div className="row">
-                    <span>City</span>
-                    <input placeholder="City" maxLength={40} onChange={(e)=>setcity(e.target.value)} />
-                    </div>
-
-                    <div className="row">
-                    <span>Profile</span>
-                    <input placeholder="Coding profile" maxLength={380} onChange={(e)=>setsite(e.target.value)} />
-                    </div>
-
-                    <div className="row">
-                    <span>Status</span>
-                    <select onChange={(e)=>setstatus(e.target.value)}>
-                        <option value="">Select</option>
-                        <option value="available">Available</option>
-                        <option value="unavailable">Unavailable</option>
-                    </select>
-                    </div>
-
-                    <div className="buttons">
-                    <button type="button" onClick={()=>document.getElementById("fileinput").click()}>
-                        Change Photo
-                    </button>
-                    <button type="submit">Update</button>
-                    </div>
-
-                    <input type="file" hidden id="fileinput" accept="image/*" onChange={(e)=>setfile(e.target.files[0])}/>
-                </form>
-                </div>
-
-                {/* RIGHT SIDE IMAGE */}
-                <div className="imageSide">
-                {file instanceof File ? (
-                        <img src={URL.createObjectURL(file)} />
-                    ) : file ? (
-                        <img src={file} />
-                    ) : (
-                        <div className="placeholder">Upload<br/>Photo</div>
-                    )}
-                </div>
-
+            <div className="row">
+              <span>Name</span>
+              <input value={name} onChange={(e) => setName(e.target.value)} />
             </div>
+
+            <div className="row">
+              <span>Email</span>
+              <input value={email} onChange={(e) => setEmail(e.target.value)} />
+            </div>
+
+            <div className="row">
+              <span>Bio</span>
+              <input value={bio} onChange={(e) => setBio(e.target.value)} />
+            </div>
+
+            <div className="row">
+              <span>City</span>
+              <input value={city} onChange={(e) => setCity(e.target.value)} />
+            </div>
+
+            <div className="row">
+              <span>Profile</span>
+              <input value={site} onChange={(e) => setSite(e.target.value)} />
+            </div>
+
+            <div className="row">
+              <span>Status</span>
+              <select value={status} onChange={(e) => setStatus(e.target.value)}>
+                <option value="">Select</option>
+                <option value="available">Available</option>
+                <option value="unavailable">Unavailable</option>
+              </select>
+            </div>
+
+            <div className="buttons">
+              <button type="button" onClick={() => document.getElementById("fileinput").click()}>
+                Change Photo
+              </button>
+              <button type="submit">Update</button>
+            </div>
+
+            <input
+              id="fileinput"
+              type="file"
+              hidden
+              accept="image/*"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+
+          </form>
         </div>
-    )
-}
+
+        {/* RIGHT IMAGE PREVIEW */}
+        <div className="imageSide">
+          {file instanceof File ? (
+            <img src={URL.createObjectURL(file)} alt="preview" />
+          ) : file ? (
+            <img src={file} alt="profile" />
+          ) : (
+            <div className="placeholder">Upload<br />Photo</div>
+          )}
+        </div>
+
+      </div>
+    </div>
+  );
+};
 
 export default Update;
