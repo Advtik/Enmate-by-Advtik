@@ -37,7 +37,7 @@ const Opportunity = ({opportunity}) => {
                     <div className="userinfo">
                       <img src={opportunity.profilepic} alt="" />
                       <div className="details">
-                        <Link to={`/profile/${opportunity.userid}`}>
+                        <Link to={`/profile/${opportunity.username}`}>
                           <span className="name">{opportunity.name}</span>
                         </Link>
                         <span className="date">

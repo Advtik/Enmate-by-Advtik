@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./navbar.scss"
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
@@ -8,15 +8,31 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import * as React from 'react';
 import { DarkModeContext } from '../../context/darkModeContext';
 import { AuthContext } from '../../context/authContext';
+import makeRequest from '../../axios';
 
 
 const Navbar = ({post}) => {
   const {darkMode,toggle} = React.useContext(DarkModeContext); 
   const {currentUser} = React.useContext(AuthContext); 
+  const [searchname,setSearchName]=useState("");
+  const navigate=useNavigate();
+  const onSearch=async()=>{
+    try{
+        const res=await makeRequest.get("/users/find/"+searchname);
+        // e.preventDefault();
+        navigate(`/profile/${searchname}`);
+        return res.data;
+    }
+    catch(e){
+        console.log(e);
+        alert("User not found");
+    }
+
+  }
   console.log(currentUser);
   return (
     <div className='navbar'>
@@ -31,7 +47,12 @@ const Navbar = ({post}) => {
             {/* <WbSunnyOutlinedIcon></WbSunnyOutlinedIcon> */}
             <div className='search'>
                 <SearchOutlinedIcon></SearchOutlinedIcon>
-                <input type='text' placeholder='Search...'></input>
+                <input type='text' value={searchname} placeholder='Search user...' onChange={(e)=>{setSearchName(e.target.value)}} onKeyDown={(e)=>{
+                    if(e.key=== "Enter"){
+                        setSearchName(e.target.value);
+                        onSearch();
+                    }
+                }}></input>
             </div>
         </div>
         <div className="right">

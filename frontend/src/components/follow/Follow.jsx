@@ -14,7 +14,7 @@ const Follow = ({user}) => {
                 <img src={user.profilepic} alt=""></img>
                 <div className="followdetails">
                 <Link
-                    to={`/profile/${user.id}`}
+                    to={`/profile/${user.username}`}
                     style={{ textDecoration: "none", color: "inherit" }}
                 >
                 <span className="followname">{user.name}</span>

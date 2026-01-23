@@ -14,7 +14,7 @@ const AvailableUser = ({available}) => {
                 <img src={available.profilepic} alt=""></img>
                 <div className="details">
                 <Link
-                    to={`/profile/${available.id}`}
+                    to={`/profile/${available.username}`}
                     style={{ textDecoration: "none", color: "inherit" }}
                 >
                 <span className="availablename">{available.name}</span>

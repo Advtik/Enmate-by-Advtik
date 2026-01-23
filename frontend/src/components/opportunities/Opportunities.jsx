@@ -18,11 +18,24 @@ const Opportunities = () => {
   console.log("opportunities",data?.rows);
   return (
     <div className="opportunities">
-        {error?"Sorry":
-        (isLoading?"Loading":data?.rows?.map(opportunity=>(
-            <Opportunity opportunity={opportunity}></Opportunity>
-        )))}
+      {error && <div>Sorry</div>}
+
+      {isLoading && <div>Loading</div>}
+
+      {!isLoading && !error && data?.rows?.length > 0 && (
+        data.rows.map((opportunity) => (
+          <Opportunity
+            key={opportunity.id}
+            opportunity={opportunity}
+          />
+        ))
+      )}
+
+      {!isLoading && !error && data?.rows?.length === 0 && (
+        <div>No opportunities yet..</div>
+      )}
     </div>
+
   )
 }
 

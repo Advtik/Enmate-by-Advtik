@@ -5,14 +5,14 @@ import Posts from "../../components/posts/posts"
 import Update from "../../components/update/Update"
 import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query'
 import makeRequest from "../../axios";
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import CreatePost from '../../components/createpost/CreatePost'
 
 const Profile = ({open,setOpen}) => {
   const {currentUser,setCurrentUser} = useContext(AuthContext);
   const[showUpdate,setshowUpdate]=useState(false);
 
-  const username=useLocation().pathname.split("/")[2];
+  const {username}=useParams();
   // console.log("userId",userId);
   console.log(currentUser);
 
@@ -21,7 +21,7 @@ const Profile = ({open,setOpen}) => {
   }
 
   const { isLoading, error, data}=useQuery({
-      queryKey: ['user'],
+      queryKey: ['user',username],
       queryFn:async()=>{
           const res=await makeRequest.get("/users/find/"+username)
           return res.data; 
