@@ -1,258 +1,211 @@
-🚀 Enmate — Connect. Collaborate. Grow.
+# 🚀 Enmate — Connect. Collaborate. Grow.
 
-Enmate is a social and real-time networking platform built especially for students and developers who want to connect with like-minded people, find teammates, and discover opportunities related to coding events, hackathons, projects, and competitive programming.
+**Enmate** is a social and real-time networking platform built for **students and developers** to connect with like-minded people, find teammates, and discover opportunities related to **hackathons, coding contests, projects, and competitive programming**.
 
-The idea behind Enmate is simple:
+> 🎯 **Goal**  
+> Make it easier to meet the right people and the right opportunities at the right time.
 
-Make it easier for students to meet the right people and the right opportunities at the right time.
+---
 
-Made by: Adwiteek Samadder
-GitHub: @Advtik
+## 🌐 Live Application
 
-✨ What Enmate Offers
-🔐 Authentication & Accounts
+🔗 https://enmate.vercel.app
 
-Secure JWT-based login system
+---
 
-Session handling with protected routes
+## ✨ Features
 
-Each user has a personal account and profile
+### 🔐 Authentication & Accounts
+- Secure **JWT-based authentication**
+- Protected routes and persistent sessions
+- Personal user accounts and profiles
 
-👤 User Profiles
+---
 
-Custom user profiles with:
+### 👤 User Profiles
+- Custom profiles with:
+  - Name, bio, city, website
+  - Profile picture
+  - Availability status
+- Edit profile using a clean modal interface
+- Follow and unfollow other users
 
-Name, bio, city, website
+---
 
-Profile picture
+### 📝 Posts & Social Feed
+- Create posts with **text and images**
+- Like and comment on posts
+- Dynamic social feed
+- Designed for sharing:
+  - Ideas
+  - Announcements
+  - Coding & event updates
 
-Availability status (available / unavailable)
+---
 
-Edit profile using a clean modal interface
+### 🎯 Opportunities Section
+- Dedicated **Opportunities** panel
+- Highlights posts related to:
+  - Hackathons
+  - Coding contests
+  - Projects
+  - Competitive programming
+- Helps users find opportunities quickly without endless scrolling
 
-Follow and unfollow other users
+---
 
-📝 Posts & Social Feed
+### 💬 Real-Time Messaging
+- One-to-one chat system
+- Instant messaging using **Socket.IO**
+- Online user tracking
+- Persistent conversations stored in the database
 
-Create posts with text and images
+---
 
-Like and comment on posts
+### 🤝 Networking & Team Building
+- Discover and connect with other users
+- Find teammates for:
+  - Hackathons
+  - College projects
+  - Competitive programming
+- Built with student collaboration in mind
 
-Feed updates dynamically
+---
 
-Designed for sharing ideas, announcements, and event information
+### 🎨 UI & Experience
+- Clean and modern interface
+- Responsive design
+- Dark / light theme support
+- Smooth transitions and modals
+- Focused on simplicity and usability
 
-🎯 Opportunities Section (Right Sidebar)
+---
 
-A dedicated Opportunities section
+## 🧠 Who Is Enmate For?
 
-Automatically highlights posts related to:
-
-Hackathons
-
-Coding contests
-
-Projects
-
-Competitive programming events
-
-Helps users quickly find opportunities without scrolling through the entire feed
-
-💬 Real-Time Messaging
-
-One-to-one chat system
-
-Instant messaging using Socket.IO
-
-Online user tracking
-
-Persistent conversations stored in the database
-
-🤝 Networking & Team Building
-
-Discover and connect with other users
-
-Find teammates for:
-
-Hackathons
-
-Projects
-
-Competitive programming
-
-Built with student collaboration in mind
-
-🎨 Clean & Modern UI
-
-Responsive design
-
-Dark and light theme support
-
-Smooth transitions and modals
-
-Focused on simplicity and usability
-
-🧠 Who Enmate Is For
-
-Enmate is built primarily for students and developers, especially those who are involved in:
-
-Competitive programming
-
-Hackathons
-
-College projects
-
-Coding contests
-
-Tech communities
+Enmate is built for:
+- Students
+- Developers
+- Competitive programmers
+- Hackathon participants
+- Tech community members
 
 If you’re looking to:
+- Find teammates
+- Discover coding opportunities
+- Connect with people sharing similar interests
 
-Find teammates
+👉 **Enmate is for you.**
 
-Discover coding opportunities
+---
 
-Connect with people who share similar interests
+## 🏗️ Project Structure
 
-Enmate is made for you.
-
-🏗️ Project Structure
-
-The project follows a clear full-stack separation:
-
+```text
 enmate/
-├── api/          → Backend
-├── frontend/     → Frontend
-└── README.md
+├── api/          # Express Backend & Socket.IO logic
+├── frontend/     # React Application & SCSS styling
+└── README.md     # Project Documentation
+```
 
+---
 
-Each part is developed independently but works together seamlessly.
 
-🖥️ Frontend
-Technologies Used
+The project follows a **clear full-stack separation**, with frontend and backend developed independently.
 
-React (Vite)
 
-React Router
+---
 
-SCSS
+## 🖥️ Frontend
 
-Axios
+### Tech Stack
+- React (Vite)
+- React Router
+- SCSS
+- Axios
+- @tanstack/react-query
+- Socket.IO Client
 
-@tanstack/react-query
+### Responsibilities
+- User interface and routing
+- API communication
+- Authentication handling
+- Real-time message updates
+- Feed, profile, and opportunity rendering
 
-Socket.IO Client
+**Hosting:** Vercel
 
-Frontend Responsibilities
+---
 
-User interface and routing
+## ⚙️ Backend
 
-API communication
+### Tech Stack
+- Node.js
+- Express
+- PostgreSQL (Neon – serverless)
+- Socket.IO
+- JWT Authentication
+- Multer
+- Cloudinary
 
-Authentication handling
+### Responsibilities
+- REST APIs for users, posts, likes, comments, and follows
+- Authentication and authorization
+- Real-time messaging
+- Media uploads and file handling
+- Database communication and business logic
 
-Real-time message updates
+**Hosting:** Render
 
-Profile, feed, and opportunity rendering
+---
 
-Hosting
+## 🗄️ Database
+- PostgreSQL (Neon – serverless)
+- Designed to support:
+  - Users and profiles
+  - Posts, likes, and comments
+  - Social relationships
+  - Conversations and messages
+- Scalable and relational by design
 
-Deployed on Vercel
+---
 
-⚙️ Backend
-Technologies Used
+## 🔌 Real-Time System
+- Built using **Socket.IO**
+- Supports:
+  - Live messaging
+  - Online user presence
+  - Instant updates without page refresh
 
-Node.js
+---
 
-Express
+## 🔐 Security
+- JWT-based authentication
+- Protected backend routes
+- Secure password handling
+- Controlled API access
 
-PostgreSQL
+---
 
-Socket.IO
+## 🚧 Project Status
+Enmate is **actively developed**.
 
-JWT Authentication
+Planned improvements include:
+- Group chats
+- Notifications
+- Better opportunity filtering
+- Enhanced discovery features
 
-Multer
+---
 
-Cloudinary
+## 👨‍💻 Author
 
-Backend Responsibilities
+**Adwiteek Samadder**  
+GitHub: [@Advtik](https://github.com/Advtik)
 
-REST API for users, posts, likes, comments, and follows
+---
 
-Authentication and authorization
+## ⭐ Support
+If you like Enmate or find it useful, consider **starring the repository** ⭐  
+Feedback and contributions are always welcome.
 
-Real-time chat handling
-
-File uploads and media management
-
-Database communication and business logic
-
-Hosting
-
-Deployed on Render
-
-🗄️ Database
-Technologies Used
-
-PostgreSQL
-
-Neon (serverless PostgreSQL)
-
-Database Design
-
-The database is structured to support:
-
-Users and profiles
-
-Posts, likes, and comments
-
-Follower relationships
-
-Conversations and messages
-
-It is designed to scale while keeping relationships clear and efficient.
-
-🔌 Real-Time System
-
-Built using Socket.IO
-
-Handles:
-
-Live messaging
-
-Online user presence
-
-Instant updates without page refresh
-
-🔐 Security Approach
-
-JWT-based authentication
-
-Protected backend routes
-
-Secure password handling
-
-Controlled API access
-
-🚧 Project Status
-
-Enmate is actively developed and improved.
-Future updates may include:
-
-Group chats
-
-Better opportunity filtering
-
-Notifications
-
-Enhanced discovery features
-
-👨‍💻 Author
-
-Adwiteek Samadder
-GitHub: @Advtik
-
-⭐ Support
-
-If you like Enmate or find it useful, feel free to star the repository and explore the code.
