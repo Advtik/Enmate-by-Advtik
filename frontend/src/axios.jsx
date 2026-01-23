@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const makeRequest=axios.create({
-    baseURL: "http://192.168.1.40:8800/api/",
+    baseURL: "https://enmate-by-advtik.onrender.com/api/",
     withCredentials:true,
 })  
 
