@@ -9,7 +9,7 @@ export const AuthContextProvider = ({ children }) => {
   );
 
   const login = async(inputs) => {
-    const res=await axios.post("https://enmate-by-advtik.onrender.com/api/auth/login",inputs,{
+    const res=await axios.post("http://192.168.1.40:8800/api/auth/login",inputs,{
       withCredentials:true,
     })
     setCurrentUser(res.data);

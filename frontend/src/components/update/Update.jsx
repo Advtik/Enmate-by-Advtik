@@ -19,13 +19,6 @@ const Update=({onClose})=>{
         }
     });
 
-    if(isLoading){
-        return <div>Loading profile...</div>;
-    }
-    
-    if(error){
-        return <div>Failed to load profile</div>;
-    }
     const [email,setemail]=useState(data.email);
     const [name,setname]=useState(data.name);
     const [bio,setbio]=useState(data.bio);
@@ -78,6 +71,13 @@ const Update=({onClose})=>{
             imgUrl= await upload();
         }
         mutation.mutate({name,email,bio,city,profilepic:imgUrl,site,status});
+    }
+    if(isLoading){
+        return <div>Loading profile...</div>;
+    }
+    
+    if(error){
+        return <div>Failed to load profile</div>;
     }
 
     return(
