@@ -11,7 +11,7 @@ export const getPosts=(req,res)=>{
     jwt.verify(token,process.env.JWT_SECRET,(err,userInfo)=>{
         const {type}=req.query;
         console.log("type",type);
-        let q= `SELECT p.id AS postId,p.desc,p.img,p.userid,p."createdAt",p.title,p.type,p.content,u.id AS userId,u.name,u.profilepic,f.id,f."followerUserId",f."followedUserId" FROM enmateschema.posts p JOIN enmateschema.users u ON (u.id=p.userid) LEFT JOIN enmateschema.follows f ON (p.userid= f."followedUserId" AND f."followerUserId"=$1) WHERE (f."followerUserId" = $1 OR p.userid=$1) `;
+        let q= `SELECT p.id AS postId,p.desc,p.img,p.userid,p."createdAt",p.title,p.type,p.content,u.id AS userId,u.name,u.profilepic,u.username,f.id,f."followerUserId",f."followedUserId" FROM enmateschema.posts p JOIN enmateschema.users u ON (u.id=p.userid) LEFT JOIN enmateschema.follows f ON (p.userid= f."followedUserId" AND f."followerUserId"=$1) WHERE (f."followerUserId" = $1 OR p.userid=$1) `;
         
         let values=[userInfo.id];
 

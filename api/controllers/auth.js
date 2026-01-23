@@ -13,7 +13,7 @@ export const register=(req,res)=>{
             return res.status(500).json(err);
         }
         if(data.rows.length){
-            return res.status(409).json("User already exists!");
+            return res.status(409).json("User with entered username or email already exists");
         }
         //if doesn't exist create user
           //hash password

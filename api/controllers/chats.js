@@ -32,6 +32,8 @@ export const getUserConversations = (req, res) => {
                 ON u.id = cm2.user_id
             WHERE cm1.user_id = $1
               AND cm2.user_id != $1
+            ORDER BY c.created_at DESC
+
         `;
 
         db.query(q, [userId], (err, data) => {

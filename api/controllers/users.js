@@ -8,9 +8,9 @@ export const getUser=(req,res)=>{
     }
 
     jwt.verify(token,process.env.JWT_SECRET,(err,userInfo)=>{
-        const q= `SELECT * FROM enmateschema.users WHERE id=$1`;
+        const q= `SELECT * FROM enmateschema.users WHERE username=$1`;
     
-        db.query(q,[req.params.userId],(err,data)=>{
+        db.query(q,[req.params.username],(err,data)=>{
             if(err){
                 console.log(err);
                 return res.status(500).json(err); 
