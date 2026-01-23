@@ -1,7 +1,10 @@
 import {v2 as cloudinary} from "cloudinary";
 import fs from "fs";
 import dotenv from "dotenv";
-dotenv.config();
+
+if(process.env.NODE_ENV !== "production"){
+    dotenv.config();
+}
 
 cloudinary.config({ 
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
@@ -12,17 +15,22 @@ cloudinary.config({
 export const uploadoncloud=async(LocalFilePath)=>{
     try{
         if(!LocalFilePath) return null;
+
         const response=await cloudinary.uploader.upload(LocalFilePath,{
-            resource_type:"image"
-        })
+            resource_type:"auto"
+        });
 
-        console.log("File Uploaded Successfully",response.url);
+        if(fs.existsSync(LocalFilePath)){
+            fs.unlinkSync(LocalFilePath);
+        }
 
-        fs.unlinkSync(LocalFilePath);
         return response;
     }
     catch(error){
-        fs.unlinkSync(LocalFilePath);
+        if(fs.existsSync(LocalFilePath)){
+            fs.unlinkSync(LocalFilePath);
+        }
+        console.error("Cloudinary upload failed:",error);
         return null;
     }
-}
+};
