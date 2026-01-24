@@ -17,7 +17,7 @@ import cookieparser from "cookie-parser";
 import dotenv from "dotenv";
 dotenv.config();
 import multer from "multer";
-import {uploadoncloud} from "./utils/cloudinary.js"
+import {uploadOnCloudinary} from "./utils/cloudinary.js"
 import chatsRoute from "./routes/chats.js"
 //middlewares
 app.use((req,res,next)=>{
@@ -38,20 +38,22 @@ const storage = multer.memoryStorage();
 const upload = multer({storage })
 
 //posting on the upload file route
-app.post("/api/upload",upload.single("file"),async(req,res)=>{
-    const file=req.file;
-
-    if (!file) {
+app.post("/api/upload", upload.single("file"), async (req, res) => {
+  try {
+    if (!req.file) {
       return res.status(400).json("No file uploaded");
     }
-    console.log(file.path);
-    const cloudresponse=await uploadoncloud(file.buffer);
 
-    if (!cloudresponse) {
-      return res.status(500).json("Cloud upload failed");
-    }
-    res.status(200).json(cloudresponse.secure_url);
+    const result = await uploadOnCloudinary(req.file.buffer);
+
+    res.status(200).json(result.secure_url);
+
+  } catch (err) {
+    console.error("Cloudinary upload error:", err);
+    res.status(500).json("Upload failed");
+  }
 });
+
 //file upload end
 app.use("/api/auth",authRoute);
 app.use("/api/users",userRoute);

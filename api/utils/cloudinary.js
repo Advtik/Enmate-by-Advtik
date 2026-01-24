@@ -1,36 +1,22 @@
-import {v2 as cloudinary} from "cloudinary";
-import fs from "fs";
-import dotenv from "dotenv";
+import { v2 as cloudinary } from "cloudinary";
+import streamifier from "streamifier";
 
-if(process.env.NODE_ENV !== "production"){
-    dotenv.config();
-}
-
-cloudinary.config({ 
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const uploadoncloud=async(LocalFilePath)=>{
-    try{
-        if(!LocalFilePath) return null;
+export const uploadOnCloudinary = (buffer) => {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: "enmate" },
+      (error, result) => {
+        if (result) resolve(result);
+        else reject(error);
+      }
+    );
 
-        const response=await cloudinary.uploader.upload(LocalFilePath,{
-            resource_type:"auto"
-        });
-
-        if(fs.existsSync(LocalFilePath)){
-            fs.unlinkSync(LocalFilePath);
-        }
-
-        return response;
-    }
-    catch(error){
-        if(fs.existsSync(LocalFilePath)){
-            fs.unlinkSync(LocalFilePath);
-        }
-        console.error("Cloudinary upload failed:",error);
-        return null;
-    }
+    streamifier.createReadStream(buffer).pipe(stream);
+  });
 };
