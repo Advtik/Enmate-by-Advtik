@@ -39,6 +39,9 @@ const Comments = ({postId}) => {
     )
     const handleClick=async(e)=>{
         e.preventDefault();
+        if(!desc.trim()){
+            return;
+        }
         mutation.mutate({desc,postId});
     }
   return (
@@ -50,7 +53,7 @@ const Comments = ({postId}) => {
         </div>
         {error?"Sorry" : (isLoading? "Loading" : data?.rows?.map(comment=>(
             <div className="comment">
-                <img src={comment.profilePic} alt=""></img>
+                <img src={comment.profilepic} alt=""></img>
                 <div className="info">
                     <span>{comment.name}</span>
                     <p>{comment.desc}</p>

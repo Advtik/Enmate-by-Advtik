@@ -49,6 +49,9 @@ const CreatePost=({open,setOpen})=>{
     )
     const handleClick=async(e)=>{
         e.preventDefault();
+        if(!content.trim() || !title.trim() || !desc.trim()){
+            return;
+        }
         const imgUrl= await upload();
         mutation.mutate({title,desc,type,content,img:imgUrl});
         
